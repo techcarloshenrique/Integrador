@@ -70,6 +70,7 @@
             // 
             // tb_db
             // 
+            this.tb_db.BackColor = System.Drawing.Color.Gainsboro;
             this.tb_db.Controls.Add(this.tb_database);
             this.tb_db.Controls.Add(this.label9);
             this.tb_db.Controls.Add(this.label8);
@@ -91,7 +92,6 @@
             this.tb_db.Size = new System.Drawing.Size(876, 377);
             this.tb_db.TabIndex = 0;
             this.tb_db.Text = "Conexão";
-            this.tb_db.UseVisualStyleBackColor = true;
             // 
             // tb_database
             // 
@@ -311,10 +311,10 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tb_main);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimizeBox = false;
             this.Name = "frm_db";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Banco de Dados";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frm_db_Load);
             this.tb_main.ResumeLayout(false);
             this.tb_db.ResumeLayout(false);

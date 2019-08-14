@@ -26,5 +26,10 @@ namespace Integrador
         {
             this.Close();
         }
+
+        private void frm_pass_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

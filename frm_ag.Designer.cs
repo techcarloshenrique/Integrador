@@ -124,10 +124,10 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tb_main);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimizeBox = false;
             this.Name = "frm_ag";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Agendamento";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tb_main.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

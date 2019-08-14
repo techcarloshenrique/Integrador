@@ -20,65 +20,48 @@ namespace Integrador
         private void bt_save_Click(object sender, EventArgs e)
         {
 
-            switch (tbc_file.SelectedTab.Name) {
+            if (tb_processado.Text == "" 
+                || tb_recebido.Text == "" 
+                || tb_vendedores.Text == "" 
+                || tb_query.Text == "" 
+                || tb_site.Text == "" 
+                || tb_carga.Text == ""
+                || tb_imagens.Text == "")
+            {
+                MessageBox.Show("Defina todos os diretórios.", "Atenção!");
 
-                case "tbc_env":
+            }
+            else
+            {
 
-                    if (tb_export.Text == "" || tb_import.Text == "")
-                    {
-                        MessageBox.Show("Defina os disretórios de IMPORTAÇÕ E EXPORTAÇÃO.", "Atenção!");
+                // BOTÃO PARA SALVAR OS DIRETORIOS
+                Properties.Settings.Default.PROCESSADOS = tb_processado.Text;
+                Properties.Settings.Default.RECEBIDOS = tb_recebido.Text;
+                Properties.Settings.Default.VENDEDORES = tb_vendedores.Text;
+                Properties.Settings.Default.QUERYS = tb_query.Text;
+                Properties.Settings.Default.SITES = tb_site.Text;
+                Properties.Settings.Default.CARGA = tb_carga.Text;
+                Properties.Settings.Default.IMAGENS = tb_imagens.Text;
+                Properties.Settings.Default.Save();
 
-                    }
-                    else
-                    {
+                tb_recebido.Enabled = false;
+                tb_processado.Enabled = false;
+                tb_vendedores.Enabled = false;
+                tb_query.Enabled = false;
+                tb_site.Enabled = false;
+                tb_carga.Enabled = false;
+                tb_imagens.Enabled = false;
+                bt_edit.Enabled = true;
+                bt_save.Enabled = false;
 
-                        // BOTÃO PARA SALVAR OS DIRETORIOS
-                        Properties.Settings.Default.EXPORTACAO = tb_export.Text;
-                        Properties.Settings.Default.Save();
-                        Properties.Settings.Default.IMPORTACAO = tb_import.Text;
-                        Properties.Settings.Default.Save();
-
-                        tb_import.Enabled = false;
-                        tb_export.Enabled = false;
-                        bt_edit.Enabled = true;
-                        bt_save.Enabled = false;
-
-
-                        // MENSAGEM DE DIRETORIO SALVO
-                        MessageBox.Show("Salvo com sucesso!");
-
-                    }
-
-
-                    break;
-
-                case "tbc_rec":
-
-                    if (tb_import_mb_pc.Text == "")
-                    {
-                        MessageBox.Show("Defina o disretório Mobile/PC.", "Atenção!");
-
-                    }
-                    else
-                    {
-
-                        // BOTÃO PARA SALVAR OS DIRETORIOS
-                        Properties.Settings.Default.MOBILE_PC = tb_import_mb_pc.Text;
-                        Properties.Settings.Default.Save();
-
-                        tb_import_mb_pc.Enabled = false;
-                        bt_edit.Enabled = true;
-                        bt_save.Enabled = false;
-
-
-                        // MENSAGEM DE DIRETORIO SALVO
-                        MessageBox.Show("Salvo com sucesso!");
-
-                    }
-
-                    break;
+                // MENSAGEM DE DIRETORIO SALVO
+                MessageBox.Show("Salvo com sucesso!");
+                goto close;
             }
 
+            close:
+
+            this.Dispose();
 
         }
 
@@ -86,92 +69,116 @@ namespace Integrador
         {
 
             //MessageBox.Show(tbc_file.SelectedTab.Name, "Teste");
+            bt_save.Enabled = true;
+            tb_recebido.Enabled = true;
+            tb_processado.Enabled = true;
+            tb_vendedores.Enabled = true;
+            tb_query.Enabled = true;
+            tb_site.Enabled = true;
+            tb_carga.Enabled = true;
+            tb_imagens.Enabled = true;
+            bt_edit.Enabled = false;
 
-            switch (tbc_file.SelectedTab.Name)
-            {
-
-                case "tbc_env":
-
-                    //tb_import.Enabled = true;
-                    //tb_export.Enabled = true;
-                    bt_save.Enabled = true;
-
-                    break;
-
-                case "tbc_rec":
-
-                    tb_import_mb_pc.Enabled = true;
-                    //bt_save.Enabled = true;
-
-                break;
-
-                default:
-                    break;
-            }
-            
-        }
-
-        private void tb_import_Click(object sender, EventArgs e)
-        {
-            // BUSCAR DIRETORIO DE IMPORTAÇÃO/EXPORTAÇÃO
-
-            FolderBrowserDialog salvar = new FolderBrowserDialog();
-            if (salvar.ShowDialog() == DialogResult.OK)
-            {
-
-                // SALVA O DIRETORIO ESCOLHIDO
-                tb_import.Text = salvar.SelectedPath;
-
-            }
-        }
-
-        private void tb_export_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog salvar = new FolderBrowserDialog();
-            if (salvar.ShowDialog() == DialogResult.OK)
-            {
-
-                // SALVA O DIRETORIO ESCOLHIDO
-                tb_export.Text = salvar.SelectedPath;
-
-            }
         }
 
        
-
         private void frm_file_Load(object sender, EventArgs e)
         {
 
-           
-            //this.WindowState = FormWindowState.Normal;
-            //this.WindowState = FormWindowState.Normal;
-            if (Properties.Settings.Default.IMPORTACAO != "" && Properties.Settings.Default.EXPORTACAO != "")
-            {
-                bt_edit.Enabled = true;
-                tb_import.Text = Properties.Settings.Default.IMPORTACAO;
-                tb_export.Text = Properties.Settings.Default.EXPORTACAO;
-            }
-            else {
-                bt_save.Enabled = true;
-            }
-            //this.Width = 300;
-            //this.Height = 300;
+                String folder = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + Properties.Settings.Default.DEFAULT_PATH;
+
+                tb_recebido.Text = Properties.Settings.Default.RECEBIDOS;
+                tb_processado.Text = Properties.Settings.Default.PROCESSADOS;
+                tb_vendedores.Text = Properties.Settings.Default.VENDEDORES;
+                tb_query.Text = Properties.Settings.Default.QUERYS;
+                tb_site.Text = Properties.Settings.Default.SITES;
+                tb_carga.Text = Properties.Settings.Default.CARGA;
+                tb_imagens.Text = Properties.Settings.Default.IMAGENS;
+                tb_ftp_vend.Text = Properties.Settings.Default.FTP_VENDEDORES;
+                tb_ftp_imagens.Text = Properties.Settings.Default.FTP_IMAGENS;
+
 
         }
 
-        private void tb_import_mb_pc_Click(object sender, EventArgs e)
+        private void tb_recebido_Click(object sender, EventArgs e)
         {
-            // BUSCAR DIRETORIO MOBILE/PC
-
             FolderBrowserDialog salvar = new FolderBrowserDialog();
             if (salvar.ShowDialog() == DialogResult.OK)
             {
 
                 // SALVA O DIRETORIO ESCOLHIDO
-                tb_import_mb_pc.Text = salvar.SelectedPath;
+                tb_recebido.Text = salvar.SelectedPath;
 
             }
+        }
 
+
+        private void tb_processado_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog salvar = new FolderBrowserDialog();
+            if (salvar.ShowDialog() == DialogResult.OK)
+            {
+
+                // SALVA O DIRETORIO ESCOLHIDO
+                tb_processado.Text = salvar.SelectedPath;
+
+            }
+        }
+
+
+        private void tb_vendedores_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog salvar = new FolderBrowserDialog();
+            if (salvar.ShowDialog() == DialogResult.OK)
+            {
+
+                // SALVA O DIRETORIO ESCOLHIDO
+                tb_vendedores.Text = salvar.SelectedPath;
+
+            }
+        }
+
+        private void tb_query_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog salvar = new FolderBrowserDialog();
+            if (salvar.ShowDialog() == DialogResult.OK)
+            {
+
+                // SALVA O DIRETORIO ESCOLHIDO
+                tb_query.Text = salvar.SelectedPath;
+
+            }
+        }
+
+        private void tb_site_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog salvar = new FolderBrowserDialog();
+            if (salvar.ShowDialog() == DialogResult.OK)
+            {
+                // SALVA O DIRETORIO ESCOLHIDO
+                tb_site.Text = salvar.SelectedPath;
+            }
+        }
+
+        private void tb_carga_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog salvar = new FolderBrowserDialog();
+            if (salvar.ShowDialog() == DialogResult.OK)
+            {
+                // SALVA O DIRETORIO ESCOLHIDO
+                tb_carga.Text = salvar.SelectedPath;
+            }
+        }
+
+        private void tb_imagens_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog salvar = new FolderBrowserDialog();
+            if (salvar.ShowDialog() == DialogResult.OK)
+            {
+                // SALVA O DIRETORIO ESCOLHIDO
+                tb_imagens.Text = salvar.SelectedPath;
+
+            }
         }
     }
 }

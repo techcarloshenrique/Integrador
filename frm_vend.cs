@@ -88,7 +88,7 @@ namespace Integrador
 
             SqlConnection conn = frm_main.Conexao.obterConexao();
 
-            String query = "SELECT * FROM ST_VENDEDORES";
+            String query = "SELECT * FROM SONIC_USUARIOS";
 
             SqlCommand retorno = new SqlCommand(query, conn);
 

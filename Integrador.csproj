@@ -45,10 +45,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>TRACE_LOGO_TRANSP.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MaterialSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\MaterialSkin.Net4.1.0.0\lib\net40\MaterialSkin.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -81,6 +81,12 @@
     <Compile Include="frm_dash.Designer.cs">
       <DependentUpon>frm_dash.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_drag_and_drop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_drag_and_drop.Designer.cs">
+      <DependentUpon>frm_drag_and_drop.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_file.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +98,12 @@
     </Compile>
     <Compile Include="frm_ftp.Designer.cs">
       <DependentUpon>frm_ftp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_carga.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_carga.Designer.cs">
+      <DependentUpon>frm_carga.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_login.cs">
       <SubType>Form</SubType>
@@ -137,6 +149,12 @@
     <Compile Include="frm_sobre.Designer.cs">
       <DependentUpon>frm_sobre.cs</DependentUpon>
     </Compile>
+    <Compile Include="site.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="site.Designer.cs">
+      <DependentUpon>site.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="frm_dashboard.resx">
       <DependentUpon>frm_dashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,11 +164,17 @@
     <EmbeddedResource Include="frm_dash.resx">
       <DependentUpon>frm_dash.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frm_drag_and_drop.resx">
+      <DependentUpon>frm_drag_and_drop.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_file.resx">
       <DependentUpon>frm_file.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_ftp.resx">
       <DependentUpon>frm_ftp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_carga.resx">
+      <DependentUpon>frm_carga.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_login.resx">
       <DependentUpon>frm_login.cs</DependentUpon>
@@ -183,7 +207,9 @@
     <EmbeddedResource Include="frm_sobre.resx">
       <DependentUpon>frm_sobre.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <EmbeddedResource Include="site.resx">
+      <DependentUpon>site.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -3650,6 +3676,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TRACE_LOGO_TRANSP.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

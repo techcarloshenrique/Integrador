@@ -40,6 +40,7 @@ namespace Integrador
             tb_user.Enabled = false;
             tb_pass.Enabled = false;
             MessageBox.Show("Salvo com sucesso!", "Conexão");
+            this.Close();
 
 
         }

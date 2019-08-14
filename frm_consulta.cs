@@ -179,10 +179,10 @@ namespace Integrador
 
             }
 
-            catch (Exception erro)
+            catch (Exception ex)
             {
 
-                //MessageBox.Show("Erro ao exportar o arquivo " + nome_arquivo + "\n\nDetalhe do erro: " + erro.Message);
+                MessageBox.Show("Erro ao exportar o arquivo  \n\nDetalhe do erro: " + ex.Message);
 
             }
         }
@@ -191,7 +191,7 @@ namespace Integrador
         {
 
             // STRING QUE RECEBE O DIRETÓRIO    
-            string diretorio = Properties.Settings.Default.IMPORTACAO + "\\";
+            string diretorio = Properties.Settings.Default.RECEBIDOS + "\\";
 
             // INSTANCIANDO UMA NOVA CONEXAO
             SqlConnection conn = Conexao.obterConexao();
@@ -216,7 +216,7 @@ namespace Integrador
                     query += line;
                     line = sr.ReadLine();
                 }
-                String query2 = "SELECT * FROM ST_VENDEDORES";
+                //String query2 = "SELECT * FROM ST_VENDEDORES";
                 // AQUI DECIDE O QUE FAZER COM A QUERY GERADA
                 //GravarTXT(conn, arquivo, query);
                 //montarResultado(conn, arquivo, query2, dgv);
@@ -279,7 +279,7 @@ namespace Integrador
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string importacao = Properties.Settings.Default.IMPORTACAO;
+            string importacao = Properties.Settings.Default.RECEBIDOS;
             DirectoryInfo import = new DirectoryInfo(importacao);
 
             Temp file = new Temp();
@@ -304,7 +304,7 @@ namespace Integrador
 
         private void ts_prod_refresh_Click(object sender, EventArgs e)
         {
-            string importacao = Properties.Settings.Default.IMPORTACAO;
+            string importacao = Properties.Settings.Default.RECEBIDOS;
             DirectoryInfo import = new DirectoryInfo(importacao);
             
             Temp file = new Temp();

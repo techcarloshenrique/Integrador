@@ -117,32 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="ofd_1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAArhthwLYnZpi2H2OotiNj3LYjY9y2I2PctiNj3LYjY9y2I2PctiNj3LYjY9y2H
-        2PctiNjxK4bZkwAAAAAAAAAAM47Z5tzw+vCn3fT9ntv0/5ba8/+O2PP/htfz/3/U8v950/L/ctLx/2zQ
-        8f9pz/H/wur4/jOO2fAAAAAAAAAAADWU2vfv+v7/oen5/5Hl+P+B4ff/ct72/2Pa9f9U1/T/R9Pz/znQ
-        8v8uzfH/Jsvw/8ry+/81lNr3AAAAAAAAAAA2mtr48vr9/7Pt+v+k6fn/leb4/4Xi9/923vb/Zdv1/1fX
-        9P9J1PP/O9Hy/zDO8f/M8vv/NZja9wAAAAAAAAAANqHa+fb8/v/I8vz/ue/7/6zs+v+c6Pn/i+P3/3zg
-        9v9s3Pb/Xdn1/0/W9P9E0/P/0PP8/zWf2vcAAAAAAAAAADem2vr+////+P3///b9///1/P//8/z+/9j2
-        /P+U5vj/heP3/3bf9v9o2/X/XNj0/9f0/P81pNr3AAAAAAAAAAA1q9r66Pb7/5TU7/+Izu7/c8Hp/8np
-        9v/y/P7/8/z+//L8/v/w/P7/7/v+/+77/v/+////Nqva9wAAAAAAAAAANqra8vH6/f+U3vX/k9z0/4HV
-        8v9qyu3/bMvq/4XT7/+A0u//etDv/3bP7v9yz+7/6ff7/zSu2vMAAAAAAAAAADWv2vD3/P7/juT4/5He
-        9f+f4PX/rOH2/+/7/v/0/f7/8/z+//H8/v/v+/7/7vv+//r9//k2rtrUAAAAAAAAAAA2s9r4/f7+//7/
-        ///+/v///f7///7////q9/v/a8fk+WvH4/hrx+P4a8fj+HnN5vd0yuXhMrLYVgAAAAAAAAAAM7TZ0F7C
-        4fpgw+L6YMPi+mDD4vpfw+L6PLbb3S6u3BYzqt0PM6rdDzOq3Q8zqt0PM7vdD0C/vwQAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAA==
-</value>
-  </data>
 </root>

@@ -20,20 +20,68 @@
     <Setting Name="CONN" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="IMPORTACAO" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\</Value>
-    </Setting>
-    <Setting Name="EXPORTACAO" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="TEMP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\\</Value>
+      <Value Profile="(Default)">C:\</Value>
     </Setting>
     <Setting Name="LASTEXPORT" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="MOBILE_PC" Type="System.String" Scope="User">
+    <Setting Name="SITE" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LICENSA" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FTP_EMPRESA_IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">123.456.789.0</Value>
+    </Setting>
+    <Setting Name="FTP_EMPRESA_USER" Type="System.String" Scope="User">
+      <Value Profile="(Default)">user</Value>
+    </Setting>
+    <Setting Name="FTP_EMPRESA_PASS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">123456</Value>
+    </Setting>
+    <Setting Name="FTP_IMAGENS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/server_sonic/imagens/</Value>
+    </Setting>
+    <Setting Name="FTP_VENDEDORES" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/server_sonic/usuarios/</Value>
+    </Setting>
+    <Setting Name="IMAGENS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Imagens</Value>
+    </Setting>
+    <Setting Name="FTP_SERVER_IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="FTP_SERVER_USER" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sonic</Value>
+    </Setting>
+    <Setting Name="FTP_SERVER_PASS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">@sonic@</Value>
+    </Setting>
+    <Setting Name="FTP_SONIC_SITES" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/sites/</Value>
+    </Setting>
+    <Setting Name="DEFAULT_PATH" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Sonic</Value>
+    </Setting>
+    <Setting Name="SITES" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Sites</Value>
+    </Setting>
+    <Setting Name="CARGA" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Carga</Value>
+    </Setting>
+    <Setting Name="QUERYS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Querys</Value>
+    </Setting>
+    <Setting Name="RECEBIDOS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Recebidos</Value>
+    </Setting>
+    <Setting Name="PROCESSADOS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Processados</Value>
+    </Setting>
+    <Setting Name="VENDEDORES" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Vendedores</Value>
     </Setting>
   </Settings>
 </SettingsFile>
