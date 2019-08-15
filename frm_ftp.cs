@@ -122,8 +122,11 @@ namespace Integrador
                     tb_tab_empresa_address.Enabled = false;
                     tb_tab_empresa_user.Enabled = false;
                     tb_tab_empresa_pass.Enabled = false;
+                    tb_tab_server_address.Enabled = false;
+                    tb_tab_server_user.Enabled = false;
+                    tb_tab_server_pass.Enabled = false;
                     MessageBox.Show("Salvo com sucesso!", "FTP");
-                    this.Close();
+                    //this.Close();
                 }
             }
             else {
@@ -148,8 +151,11 @@ namespace Integrador
                     tb_tab_server_address.Enabled = false;
                     tb_tab_server_user.Enabled = false;
                     tb_tab_server_pass.Enabled = false;
+                    tb_tab_empresa_address.Enabled = false;
+                    tb_tab_empresa_user.Enabled = false;
+                    tb_tab_empresa_pass.Enabled = false;
                     MessageBox.Show("Salvo com sucesso!", "FTP");
-                    this.Close();
+                    //this.Close();
                 }
 
             }
@@ -192,15 +198,26 @@ namespace Integrador
 
         private void bt_edit_Click(object sender, EventArgs e)
         {
-            
+            if (tb_ftp.SelectedTab == tb_ftp.TabPages["tb_page_empresa"])
+            {
+               
                 bt_teste.Enabled = true;
                 tb_tab_empresa_address.Enabled = true;
                 tb_tab_empresa_user.Enabled = true;
                 tb_tab_empresa_pass.Enabled = true;
+                bt_edit.Enabled = false;
+            }
+            else {
+                bt_teste.Enabled = true;
                 tb_tab_server_address.Enabled = true;
                 tb_tab_server_user.Enabled = true;
                 tb_tab_server_pass.Enabled = true;
                 bt_edit.Enabled = false;
+            
+            }
+               
+              
+                
         
             
             
@@ -213,5 +230,9 @@ namespace Integrador
             //panel_ftp.Anchor = AnchorStyles.None;
         }
 
+        private void tb_ftp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

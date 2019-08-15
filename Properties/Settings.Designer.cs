@@ -241,7 +241,7 @@ namespace Integrador.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("@sonic@")]
+        [global::System.Configuration.DefaultSettingValueAttribute("123456")]
         public string FTP_SERVER_PASS {
             get {
                 return ((string)(this["FTP_SERVER_PASS"]));

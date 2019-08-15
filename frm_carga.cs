@@ -30,7 +30,7 @@ namespace Integrador
 
             conn = frm_main.Conexao.obterConexao();
 
-            String query = "SELECT SU.ID, SU.NOME FROM SONIC_USUARIOS SU";
+            String query = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU";
 
             SqlCommand retorno = new SqlCommand(query, conn);
 

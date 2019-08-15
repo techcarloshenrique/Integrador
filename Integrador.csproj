@@ -135,6 +135,12 @@
     <Compile Include="frm_pass.Designer.cs">
       <DependentUpon>frm_pass.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_query.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_query.Designer.cs">
+      <DependentUpon>frm_query.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_vend.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_pass.resx">
       <DependentUpon>frm_pass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_query.resx">
+      <DependentUpon>frm_query.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_vend.resx">
       <DependentUpon>frm_vend.cs</DependentUpon>

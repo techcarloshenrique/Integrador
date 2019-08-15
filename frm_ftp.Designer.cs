@@ -75,6 +75,7 @@
             this.tb_ftp.SelectedIndex = 0;
             this.tb_ftp.Size = new System.Drawing.Size(465, 308);
             this.tb_ftp.TabIndex = 0;
+            this.tb_ftp.SelectedIndexChanged += new System.EventHandler(this.tb_ftp_SelectedIndexChanged);
             // 
             // tb_page_empresa
             // 

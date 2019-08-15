@@ -57,7 +57,7 @@
       <Value Profile="(Default)">sonic</Value>
     </Setting>
     <Setting Name="FTP_SERVER_PASS" Type="System.String" Scope="User">
-      <Value Profile="(Default)">@sonic@</Value>
+      <Value Profile="(Default)">123456</Value>
     </Setting>
     <Setting Name="FTP_SONIC_SITES" Type="System.String" Scope="User">
       <Value Profile="(Default)">/sites/</Value>

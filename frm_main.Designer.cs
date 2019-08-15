@@ -75,6 +75,7 @@
             this.tool_ftp = new System.Windows.Forms.ToolStripButton();
             this.tool_ag = new System.Windows.Forms.ToolStripButton();
             this.tool_file = new System.Windows.Forms.ToolStripButton();
+            this.tool_query = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tool_gerar_arquivos = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -181,7 +182,7 @@
             this.menu_ts_db,
             this.menu_ts_ftp});
             this.menu_ts_conn.Name = "menu_ts_conn";
-            this.menu_ts_conn.Size = new System.Drawing.Size(152, 22);
+            this.menu_ts_conn.Size = new System.Drawing.Size(150, 22);
             this.menu_ts_conn.Text = "Conexões";
             // 
             // menu_ts_db
@@ -203,7 +204,7 @@
             this.menu_ts_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_ts_env_rec});
             this.menu_ts_file.Name = "menu_ts_file";
-            this.menu_ts_file.Size = new System.Drawing.Size(152, 22);
+            this.menu_ts_file.Size = new System.Drawing.Size(150, 22);
             this.menu_ts_file.Text = "Arquivos";
             // 
             // menu_ts_env_rec
@@ -216,19 +217,19 @@
             // menu_ts_ag
             // 
             this.menu_ts_ag.Name = "menu_ts_ag";
-            this.menu_ts_ag.Size = new System.Drawing.Size(152, 22);
+            this.menu_ts_ag.Size = new System.Drawing.Size(150, 22);
             this.menu_ts_ag.Text = "Agendamento";
             this.menu_ts_ag.Click += new System.EventHandler(this.ag_ts_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(147, 6);
             // 
             // usuariosToolStripMenuItem1
             // 
             this.usuariosToolStripMenuItem1.Name = "usuariosToolStripMenuItem1";
-            this.usuariosToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.usuariosToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
             this.usuariosToolStripMenuItem1.Text = " Usuários";
             this.usuariosToolStripMenuItem1.Click += new System.EventHandler(this.vendedoresToolStripMenuItem1_Click);
             // 
@@ -408,6 +409,7 @@
             this.tool_ftp,
             this.tool_ag,
             this.tool_file,
+            this.tool_query,
             this.toolStripSeparator1,
             this.tool_gerar_arquivos,
             this.toolStripSeparator2,
@@ -472,6 +474,16 @@
             this.tool_file.Size = new System.Drawing.Size(23, 20);
             this.tool_file.Text = "Arquivos";
             this.tool_file.Click += new System.EventHandler(this.tool_file_Click);
+            // 
+            // tool_query
+            // 
+            this.tool_query.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tool_query.Image = global::Integrador.Properties.Resources.application_osx_terminal;
+            this.tool_query.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_query.Name = "tool_query";
+            this.tool_query.Size = new System.Drawing.Size(23, 20);
+            this.tool_query.Text = "Query\'s";
+            this.tool_query.Click += new System.EventHandler(this.tool_query_Click);
             // 
             // toolStripSeparator1
             // 
@@ -694,6 +706,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem menu_ts_enviar_imagens;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolStripButton tool_query;
     }
 }
 

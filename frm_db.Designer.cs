@@ -34,9 +34,6 @@
             this.tb_db = new System.Windows.Forms.TabPage();
             this.tb_database = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.tb_pass = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tb_user = new System.Windows.Forms.TextBox();
@@ -65,17 +62,14 @@
             this.tb_main.Location = new System.Drawing.Point(0, 0);
             this.tb_main.Name = "tb_main";
             this.tb_main.SelectedIndex = 0;
-            this.tb_main.Size = new System.Drawing.Size(884, 406);
+            this.tb_main.Size = new System.Drawing.Size(465, 308);
             this.tb_main.TabIndex = 0;
             // 
             // tb_db
             // 
-            this.tb_db.BackColor = System.Drawing.Color.Gainsboro;
+            this.tb_db.BackColor = System.Drawing.SystemColors.Window;
             this.tb_db.Controls.Add(this.tb_database);
             this.tb_db.Controls.Add(this.label9);
-            this.tb_db.Controls.Add(this.label8);
-            this.tb_db.Controls.Add(this.label7);
-            this.tb_db.Controls.Add(this.label6);
             this.tb_db.Controls.Add(this.tb_pass);
             this.tb_db.Controls.Add(this.label5);
             this.tb_db.Controls.Add(this.tb_user);
@@ -89,7 +83,7 @@
             this.tb_db.Location = new System.Drawing.Point(4, 25);
             this.tb_db.Name = "tb_db";
             this.tb_db.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_db.Size = new System.Drawing.Size(876, 377);
+            this.tb_db.Size = new System.Drawing.Size(457, 279);
             this.tb_db.TabIndex = 0;
             this.tb_db.Text = "Conexão";
             // 
@@ -111,42 +105,6 @@
             this.label9.Size = new System.Drawing.Size(73, 17);
             this.label9.TabIndex = 20;
             this.label9.Text = "Database:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Enabled = false;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label8.Location = new System.Drawing.Point(260, 35);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(185, 17);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "Lista de SGBD\'s disponíveis";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Enabled = false;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label7.Location = new System.Drawing.Point(260, 67);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(157, 17);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "IP ou endereço NetBios";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Enabled = false;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label6.Location = new System.Drawing.Point(260, 131);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 17);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Padrão: 1433";
             // 
             // tb_pass
             // 
@@ -253,10 +211,10 @@
             this.flowLayoutPanel1.Controls.Add(this.bt_edit);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 361);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 263);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(884, 45);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(465, 45);
             this.flowLayoutPanel1.TabIndex = 22;
             // 
             // bt_save
@@ -265,7 +223,7 @@
             this.bt_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_save.Image = global::Integrador.Properties.Resources.disk;
             this.bt_save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_save.Location = new System.Drawing.Point(796, 8);
+            this.bt_save.Location = new System.Drawing.Point(377, 8);
             this.bt_save.Name = "bt_save";
             this.bt_save.Size = new System.Drawing.Size(75, 30);
             this.bt_save.TabIndex = 12;
@@ -279,7 +237,7 @@
             this.bt_teste.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_teste.Image = global::Integrador.Properties.Resources.database;
             this.bt_teste.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_teste.Location = new System.Drawing.Point(714, 8);
+            this.bt_teste.Location = new System.Drawing.Point(295, 8);
             this.bt_teste.Name = "bt_teste";
             this.bt_teste.Size = new System.Drawing.Size(76, 30);
             this.bt_teste.TabIndex = 10;
@@ -294,7 +252,7 @@
             this.bt_edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_edit.Image = global::Integrador.Properties.Resources.pencil;
             this.bt_edit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_edit.Location = new System.Drawing.Point(632, 8);
+            this.bt_edit.Location = new System.Drawing.Point(213, 8);
             this.bt_edit.Name = "bt_edit";
             this.bt_edit.Size = new System.Drawing.Size(76, 30);
             this.bt_edit.TabIndex = 11;
@@ -307,7 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 406);
+            this.ClientSize = new System.Drawing.Size(465, 308);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tb_main);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -339,9 +297,6 @@
         private System.Windows.Forms.Label lb_user;
         private System.Windows.Forms.TextBox tb_pass;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tb_database;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;

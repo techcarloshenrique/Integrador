@@ -505,7 +505,7 @@ namespace Integrador
                 SqlCommand retorno = new SqlCommand(query, conexao);
                 SqlDataReader row = retorno.ExecuteReader();
 
-                // CRIANDO UM  E POPULANDO UM DATATABLE COM O RETORNO DA QUERY
+                // CRIANDO E POPULANDO UM DATATABLE COM O RETORNO DA QUERY
                 DataTable tabela = new DataTable();
                 tabela.Load(row);
 
@@ -693,13 +693,13 @@ namespace Integrador
             int inicio = vendedor.IndexOf("-");
             String nome = vendedor.Substring(inicio + 2, vendedor.Length - (inicio + 2));
 
-            if (vendedor == "TODOS OS VENDEDORES")
+            if (vendedor == "TODOS OS USUARIOS")
             {
-                select = "SELECT SU.ID, SU.NOME FROM SONIC_USUARIOS SU";
+                select = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU";
             }
             else
             {
-                select = "SELECT SU.ID, SU.NOME FROM SONIC_USUARIOS SU WHERE SU.NOME = '" + nome + "'";
+                select = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU WHERE SU.NOME = '" + nome + "'";
             }
 
             // APAGA TODOS OS ARQUIVOS DO DIRETORIO DE VENDEDORES
@@ -717,7 +717,7 @@ namespace Integrador
                 //EXECUTA O SELECT
                 SqlDataReader row = retorno.ExecuteReader();
 
-                // CRIANDO UM  E POPULANDO UM DATATABLE COM O RETORNO DO SELECT
+                // CRIANDO E POPULA UM DATATABLE COM O RETORNO DO SELECT
                 DataTable tabela = new DataTable();
                 tabela.Load(row);
 
@@ -1353,6 +1353,15 @@ namespace Integrador
 
         private void vendedoresToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void tool_query_Click(object sender, EventArgs e)
+        {
+
+            String form = "frm_query";
+            frm_query query = new frm_query();
+            abrirForm(form, query, this);
 
         }
     }
