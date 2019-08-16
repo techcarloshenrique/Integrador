@@ -111,7 +111,6 @@
             this.ms_main.Size = new System.Drawing.Size(880, 24);
             this.ms_main.TabIndex = 0;
             this.ms_main.Text = "Menu";
-            this.ms_main.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ms_main_ItemClicked);
             // 
             // menu_ts_sistema
             // 
@@ -534,8 +533,7 @@
             // 
             // img_tick
             // 
-            this.img_tick.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            this.img_tick.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.img_tick.Image = global::Integrador.Properties.Resources.tick;
             this.img_tick.Name = "img_tick";
@@ -547,8 +545,7 @@
             // 
             this.lb_progress.AutoSize = false;
             this.lb_progress.AutoToolTip = true;
-            this.lb_progress.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            this.lb_progress.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.lb_progress.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.lb_progress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -562,8 +559,7 @@
             // 
             this.ts_user.AutoSize = false;
             this.ts_user.AutoToolTip = true;
-            this.ts_user.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            this.ts_user.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.ts_user.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.ts_user.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -576,9 +572,7 @@
             // 
             this.ts_hora.AutoSize = false;
             this.ts_hora.AutoToolTip = true;
-            this.ts_hora.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.ts_hora.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.ts_hora.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.ts_hora.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ts_hora.Name = "ts_hora";
@@ -693,8 +687,6 @@
         private System.Windows.Forms.ToolStripMenuItem menu_ts_logout;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.PictureBox pb_change;
-        private System.Windows.Forms.ToolStripStatusLabel ts_user;
-        private System.Windows.Forms.ToolStripStatusLabel ts_hora;
         private System.Windows.Forms.ToolStripMenuItem testesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dragAndDropToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gerar_carga;
@@ -707,6 +699,8 @@
         private System.Windows.Forms.ToolStripMenuItem menu_ts_enviar_imagens;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripButton tool_query;
+        private System.Windows.Forms.ToolStripStatusLabel ts_user;
+        private System.Windows.Forms.ToolStripStatusLabel ts_hora;
     }
 }
 

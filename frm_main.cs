@@ -497,6 +497,86 @@ namespace Integrador
             }
         }
 
+        public void montarResultadoSiteDataBase(SqlConnection conexao, string secao, string query)
+        {
+
+            try
+            {
+                SqlCommand retorno = new SqlCommand(query, conexao);
+                SqlDataReader row = retorno.ExecuteReader();
+
+                // CRIANDO UM  E POPULANDO UM DATATABLE COM O RETORNO DA QUERY
+                DataTable tabela = new DataTable();
+                tabela.Load(row);
+
+                // CONTANDO O TOTAL DE LINHAS DO RETORNO PARA O VALOR MAXIMO DA PROGRESSBAR
+                int rows = tabela.Rows.Count;
+
+                // CAMINHO PADRÃO PARA GERAÇÃO DO(S) ARQUIVO(S)
+                string caminho = Properties.Settings.Default.SITES + "\\";
+
+                // NOME DA SAIDA DO(S) ARQUIVO(S)
+                String site = Properties.Settings.Default.SITE + ".TXT";
+
+
+                // LAÇO DA TABELA
+                using (SqlDataReader DR = retorno.ExecuteReader())
+                {
+
+                    // SE A CONSULTA RETORNAR LINHAS
+                    if (DR.HasRows)
+                    {
+
+                        // CRIANDO O ARQUIVO PARA A GRAVAÇÃO DOS DADOS
+                        StreamWriter valor = new StreamWriter(caminho + site, true, Encoding.GetEncoding("ISO-8859-1"));
+
+                        // ATUALIZANDO O LABEL DO PROGRESS
+                        lb_progress.Text = "EXPORTANDO -> " + secao;
+
+                        //Thread.Sleep(100);
+
+                        valor.Write(secao);
+                        valor.WriteLine();
+
+                        int a = 1;
+
+                        // ENQUANTO HOUVER LEITURA NAS LINHAS DO RETORNO
+                        while (DR.Read())
+                        {
+
+                            valor.Write(a + "=");
+
+                            // LAÇO PARA LER AS COLUNAS DA LINHA
+                            for (int i = 0; i < DR.FieldCount; i++)
+                            {
+
+                                valor.Write(DR[i] + ";", true);
+
+                            }
+
+                            // QUEBRA DE LINHA
+                            valor.WriteLine();
+                            a++;
+
+                        }
+
+                        // FECHA O ARQUIVO
+                        valor.Close();
+
+                    }
+
+                }
+
+            }
+
+            catch (Exception erro)
+            {
+
+                MessageBox.Show("Erro ao exportar o arquivo " + secao + "\n\nDetalhe do erro: " + erro.Message);
+
+            }
+        }
+
         public void gerarCargaVendedores(SqlConnection conexao, string saida, string secao, string query)
         {
 
@@ -678,7 +758,7 @@ namespace Integrador
 
         }
 
-      
+
         public void montarCargaVendedores(DirectoryInfo diretorio, String vendedor, bool transmitir)
         {
             // EXIBINDO O PROGRESS E O LABEL
@@ -890,6 +970,260 @@ namespace Integrador
 
         }
 
+        public void montarSiteDatabase()
+        {
+            // EXIBINDO O PROGRESS E O LABEL
+            img_tick.Visible = true;
+            img_tick.Image = Properties.Resources.loader2;
+            lb_progress.Visible = true;
+            lb_progress.Text = "CONECTANTO COM A BASE DE DADOS... ";
+
+            // APAGA TODOS OS ARQUIVOS DO DIRETORIO DE SITES
+            DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.SITES);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
+            // STRING QUE RECEBE O DIRETÓRIO    
+            string diretorio = Properties.Settings.Default.QUERYS + "\\";
+
+            try
+            {
+
+                // INSTANCIANDO UMA NOVA CONEXAO
+                SqlConnection conn = Conexao.obterConexao();
+
+                if (conn != null && conn.State != ConnectionState.Closed)
+                {
+                    // OBTENDO OS ARQUIVOS PARA MONTAR QUERY
+                    //FileInfo[] file = arquivos.GetFiles("*.TXT");
+
+                    // CAPTURANDO O ARQUVIO
+                    //string query = string.Empty;
+                    String carga = "SELECT * FROM SONIC_QUERY WHERE destino = 'site'";
+                    //PREPARA O SELECT
+                    SqlCommand result = new SqlCommand(carga, conn);
+
+                    //EXECUTA O SELECT
+                    SqlDataReader row = result.ExecuteReader();
+
+                    // CRIANDO E POPULA UM DATATABLE COM O RETORNO DO SELECT
+                    DataTable lista = new DataTable();
+                    lista.Load(row);
+
+                    DataGridView dgv = new DataGridView();
+                    dgv.DataSource = lista;
+
+                    // CONTANDO O TOTAL DE LINHAS DO RETORNO
+                    int countQuery = lista.Rows.Count;
+
+                    // SE HOUVER ALGUMA SEÇÃO CADASTRADA NA TABELA QUERY
+                    if (countQuery > 0)
+                    {
+
+                        String query = String.Empty;
+                        String secao = String.Empty;
+                        for (int x = 0; x < countQuery; x++)
+                        {
+
+                            query = lista.Rows[x].ItemArray[5].ToString();
+                            secao = lista.Rows[x].ItemArray[2].ToString();
+
+                            // AQUI DECIDE O QUE FAZER COM A QUERY GERADA
+                            montarResultadoSiteDataBase(conn, secao, query);
+                            // FECHANDO O OBJETO STREAMREADER
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_QUERY para gerar site. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            String form = "frm_query";
+                            frm_query q = new frm_query();
+                            abrirFormDialog(form, q);
+                        }
+
+                    }
+
+                    // FECHANDO A CONEXAO COM O BANCO
+                    Conexao.fecharConexao(conn);
+                    DateTime dt = DateTime.Now;
+                    string data = (string.Format("{0:dd/MM/yyyy}", dt));
+                    string hora = (string.Format("{0:HH:mm}", dt));
+                    Properties.Settings.Default.LASTEXPORT = "ÚLTIMA EXPORTAÇÃO FINALIZADA EM " + data + " ÀS " + hora;
+                    Properties.Settings.Default.Save();
+                    Properties.Settings.Default.Reload();
+                    img_tick.Image = Properties.Resources.tick;
+                    lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
+                }
+                else
+                {
+                    img_tick.Image = Properties.Resources.error;
+                    lb_progress.Visible = true;
+                    lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
+                    MessageBox.Show("Não foi possível realizar a operação.", "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+            }
+            catch (SqlException e)
+            {
+                img_tick.Image = Properties.Resources.error;
+                lb_progress.Visible = true;
+                lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
+                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + e.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        public void montarCargaVendedoresDatabase(List<string> uId, List<string> uName, bool transmitir)
+        {
+
+            List<string> userId = uId;
+            List<string> userName = uName;
+
+            // EXIBINDO O PROGRESS E O LABEL
+            img_tick.Visible = true;
+            img_tick.Image = Properties.Resources.loader2;
+            lb_progress.Visible = true;
+            lb_progress.Text = "CONECTANTO COM A BASE DE DADOS... ";
+
+            try
+            {
+
+                // INSTANCIANDO UMA NOVA CONEXAO
+                SqlConnection connect = Conexao.obterConexao();
+             
+                if (connect != null && connect.State != ConnectionState.Closed)
+                {
+
+                    // CAPTURANDO O ARQUVIO
+                    //string query = string.Empty;
+                    String carga = "SELECT * FROM SONIC_QUERY WHERE destino = 'carga'";
+                    //PREPARA O SELECT
+                    SqlCommand result = new SqlCommand(carga, connect);
+
+                    //EXECUTA O SELECT
+                    SqlDataReader row = result.ExecuteReader();
+
+                    // CRIANDO E POPULA UM DATATABLE COM O RETORNO DO SELECT
+                    DataTable lista = new DataTable();
+                    lista.Load(row);
+
+                    DataGridView dgv = new DataGridView();
+                    dgv.DataSource = lista;
+
+                    // CONTANDO O TOTAL DE LINHAS DO RETORNO
+                    int countQuery = lista.Rows.Count;
+
+                    // SE HOUVER ALGUMA SEÇÃO CADASTRADA NA TABELA QUERY
+                    if (countQuery > 0)
+                    {
+
+                        String query = String.Empty;
+                        String secao = String.Empty;
+                        // LAÇO PARA CADA VENDEDOR SELECIONADO
+                        for (int x = 0; x < userId.Count; x++)
+                        {
+
+                            String saida = userId[x].ToString().PadLeft(5, '0') + ".TXT";
+                            String pessoa = userName[x].ToString();
+
+                            DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.VENDEDORES);
+
+                            foreach (FileInfo txt in di.GetFiles(saida))
+                            {
+                                txt.Delete();
+                            }
+
+                            int countVend = x + 1;
+                            lb_progress.Text = "EXPORTANDO -> " + pessoa + " [" + saida + "] - " + countVend + "/" + userId.Count;
+
+                            for (int y = 0; y < countQuery; y++)
+                            {
+
+                                query = lista.Rows[y].ItemArray[5].ToString();
+                                secao = lista.Rows[y].ItemArray[2].ToString();
+
+                                if (query.Contains("?")) {
+                                    query = query.Replace("?", userId[y]);
+                                }
+
+                                gerarCargaVendedores(connect, saida, secao, query);
+
+
+                            }
+
+                        }
+
+
+                    }
+                   
+                    else {
+
+                        DialogResult res =  MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_QUERY para gerar carga. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            String form = "frm_query";
+                            frm_query q = new frm_query();
+                            abrirFormDialog(form, q);
+                        }
+                  
+                    }
+
+
+                    if (transmitir)
+                    {
+                        enviarCargaParaFtp();
+                    }
+                    else
+                    {
+
+                        // FECHANDO A CONEXAO COM O BANCO
+                        Conexao.fecharConexao(connect);
+                        DateTime dt = DateTime.Now;
+                        string data = (string.Format("{0:dd/MM/yyyy}", dt));
+                        string hora = (string.Format("{0:HH:mm}", dt));
+                        Properties.Settings.Default.LASTEXPORT = "ÚLTIMA EXPORTAÇÃO FINALIZADA EM " + data + " ÀS " + hora;
+                        Properties.Settings.Default.Save();
+                        Properties.Settings.Default.Reload();
+                        img_tick.Image = Properties.Resources.tick;
+                        lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
+
+                    }
+
+                }
+                else
+                {
+                    img_tick.Image = Properties.Resources.error;
+                    lb_progress.Visible = true;
+                    lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
+                    MessageBox.Show("Não foi possível realizar a operação.", "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+
+            }
+            catch (SqlException e)
+            {
+                img_tick.Image = Properties.Resources.error;
+                lb_progress.Visible = true;
+                lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
+                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + e.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
         class Temp
         {
             public void copiar(System.IO.DirectoryInfo dir)
@@ -1002,9 +1336,10 @@ namespace Integrador
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             pb_close.Location = new Point(this.Width - 60, 30);
             pb_change.Location = new Point(this.Width - 100, 30);
-            lb_progress.Width = (ss_main.Width / 3);
-            ts_user.Width = (ss_main.Width / 3);
-            ts_hora.Width = (ss_main.Width / 3)-43;
+            ss_main.Width = this.Width;
+            lb_progress.Width = (ss_main.Width / 3)-15;
+            ts_user.Width = (ss_main.Width / 3)-15;
+            ts_hora.Width = (ss_main.Width / 3)-25;
 
 
             bool result = false;
@@ -1117,11 +1452,7 @@ namespace Integrador
             abrirForm(form, ag, this);
         }
 
-        private void ms_main_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
+  
         private void ts_ftp_Click(object sender, EventArgs e)
         {
             String form = "frm_ftp";
@@ -1255,9 +1586,12 @@ namespace Integrador
 
         private void gerar_site_Click(object sender, EventArgs e)
         {
-            Thread site = new Thread(() => gerarSite());
+            //Thread site = new Thread(() => gerarSite());
+            //site.Start();
+            Thread site = new Thread(() => montarSiteDatabase());
             site.Start();
         }
+
 
         private void menu_ts_enviar_site_Click(object sender, EventArgs e)
         {
@@ -1340,6 +1674,12 @@ namespace Integrador
             gerarT.Start();
         }
 
+        public void gerarCargaVendedoresTabela(List<string> userId, List<string> userName, bool transmitir)
+        {
+            Thread gerarT = new Thread(() => montarCargaVendedoresDatabase(userId, userName, transmitir));
+            gerarT.Start();
+        }
+
         public void enviarCargaParaFtp() {
             DirectoryInfo from = new DirectoryInfo(Properties.Settings.Default.VENDEDORES);
             String to = Properties.Settings.Default.FTP_VENDEDORES;
@@ -1361,7 +1701,7 @@ namespace Integrador
 
             String form = "frm_query";
             frm_query query = new frm_query();
-            abrirForm(form, query, this);
+            abrirFormDialog(form, query);
 
         }
     }

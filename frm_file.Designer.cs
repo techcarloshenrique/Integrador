@@ -71,7 +71,7 @@
             this.tbc_file.Location = new System.Drawing.Point(0, 0);
             this.tbc_file.Name = "tbc_file";
             this.tbc_file.SelectedIndex = 0;
-            this.tbc_file.Size = new System.Drawing.Size(880, 402);
+            this.tbc_file.Size = new System.Drawing.Size(725, 402);
             this.tbc_file.TabIndex = 1;
             // 
             // tb_env
@@ -93,7 +93,7 @@
             this.tb_env.Location = new System.Drawing.Point(4, 25);
             this.tb_env.Name = "tb_env";
             this.tb_env.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_env.Size = new System.Drawing.Size(872, 373);
+            this.tb_env.Size = new System.Drawing.Size(717, 373);
             this.tb_env.TabIndex = 0;
             this.tb_env.Text = "Diretórios: Locais";
             this.tb_env.UseVisualStyleBackColor = true;
@@ -309,7 +309,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 357);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(880, 45);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(725, 45);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // bt_save
@@ -318,7 +318,7 @@
             this.bt_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_save.Image = global::Integrador.Properties.Resources.disk;
             this.bt_save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_save.Location = new System.Drawing.Point(792, 8);
+            this.bt_save.Location = new System.Drawing.Point(637, 8);
             this.bt_save.Name = "bt_save";
             this.bt_save.Size = new System.Drawing.Size(75, 30);
             this.bt_save.TabIndex = 16;
@@ -332,7 +332,7 @@
             this.bt_edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_edit.Image = global::Integrador.Properties.Resources.pencil;
             this.bt_edit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_edit.Location = new System.Drawing.Point(710, 8);
+            this.bt_edit.Location = new System.Drawing.Point(555, 8);
             this.bt_edit.Name = "bt_edit";
             this.bt_edit.Size = new System.Drawing.Size(76, 30);
             this.bt_edit.TabIndex = 17;
@@ -345,7 +345,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(880, 402);
+            this.ClientSize = new System.Drawing.Size(725, 402);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tbc_file);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;

@@ -28,9 +28,15 @@ namespace Integrador
         private void frm_carga_Load(object sender, EventArgs e)
         {
 
+            loadGridView();
+
+        }
+
+        public void loadGridView() {
+
             conn = frm_main.Conexao.obterConexao();
 
-            String query = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU";
+            String query = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU ORDER BY SU.CODIGO";
 
             SqlCommand retorno = new SqlCommand(query, conn);
 
@@ -40,38 +46,13 @@ namespace Integrador
             DataTable tabela = new DataTable();
             tabela.Load(row);
 
-            // CONTANDO O TOTAL DE LINHAS DO RETORNO PARA O VALOR MAXIMO DA PROGRESSBAR
-            int rows = tabela.Rows.Count;
-
-            // LAÇO DA TABELA
-            using (SqlDataReader DR = retorno.ExecuteReader())
-            {
-
-                // SE A CONSULTA RETORNAR LINHAS
-                if (DR.HasRows)
-                {
-
-                    // Make room to hold a row's values.
-                    object[] values = new object[DR.FieldCount];
-
-                    cb_vendedor.Items.Add("TODOS OS USUARIOS");
-
-                    // Loop while the reader has unread data.
-                    while (DR.Read())
-                    {
-                        
-                        DR.GetValues(values);
-
-                        //cb_vendedor.Items.Add(values[0]);
-                        cb_vendedor.Items.Add(values[0] + " - " + values[1]);
-
-                    }
-                   
-                    cb_vendedor.SelectedIndex = 0;
-
-                }
-            }
-
+            dgv_usuario.DataSource = tabela;
+            //dgv_usuario.MultiSelect = false;
+            dgv_usuario.DefaultCellStyle.SelectionBackColor = Color.PaleGreen;
+            dgv_usuario.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dgv_usuario.Rows[0].Selected = true;
+            DataGridViewColumn c = dgv_usuario.Columns[0];
+            c.Width = 60;
             frm_main.Conexao.fecharConexao(conn);
 
         }
@@ -79,18 +60,93 @@ namespace Integrador
         private void btn_gerar_Click(object sender, EventArgs e)
         {
 
-            String vendedor = cb_vendedor.Text;
-            this.Close();
-            (this.Owner as frm_main).gerarCargaVendedores(vendedor, false);
-            
+            if (dgv_usuario.SelectedCells.Count > 0)
+            {
+
+                List<string> userId = new List<string>();
+                List<string> userName = new List<string>();
+                //List<string> userName = new List<string> { };
+
+                foreach (DataGridViewRow r in dgv_usuario.SelectedRows)
+                {
+
+                    userId.Add(r.Cells[0].Value.ToString());
+                    userName.Add(r.Cells[1].Value.ToString());
+
+                }
+                this.Close();
+                //(this.Owner as frm_main).gerarCargaVendedores(vendedor, false);
+                (this.Owner as frm_main).gerarCargaVendedoresTabela(userId, userName, false);
+
+            }
+            else {
+
+                MessageBox.Show("Selecione ao menos 1 usuário");
+            }
+
         }
 
         private void btn_gerar_transmitir_Click(object sender, EventArgs e)
         {
-            String vendedor = cb_vendedor.Text;
-            this.Close();
-            (this.Owner as frm_main).gerarCargaVendedores(vendedor, true);
 
+            if (dgv_usuario.SelectedCells.Count > 0)
+            {
+
+                List<string> userId = new List<string>();
+                List<string> userName = new List<string>();
+                //List<string> userName = new List<string> { };
+
+                foreach (DataGridViewRow r in dgv_usuario.SelectedRows)
+                {
+
+                    userId.Add(r.Cells[0].Value.ToString());
+                    userName.Add(r.Cells[1].Value.ToString());
+
+                }
+                this.Close();
+                //(this.Owner as frm_main).gerarCargaVendedores(vendedor, false);
+                (this.Owner as frm_main).gerarCargaVendedoresTabela(userId, userName, true);
+
+            }
+            else
+            {
+
+                MessageBox.Show("Selecione ao menos 1 usuário");
+            }
+
+        }
+
+        private void cb_all_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_all.Checked)
+            {
+
+                dgv_usuario.SelectAll();
+
+            }
+            else {
+
+                dgv_usuario.ClearSelection();
+                lb_count.Text = "0";
+            }
+        }
+
+        private void dgv_usuario_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (dgv_usuario.SelectedCells.Count > 0)
+            {
+
+                int count = 0;
+                foreach (DataGridViewRow r in dgv_usuario.SelectedRows)
+                {
+                    count++;
+
+                }
+
+                lb_count.Text = count.ToString();
+             
+            }
+          
         }
     }
 }
