@@ -49,9 +49,11 @@
             this.bt_save = new System.Windows.Forms.Button();
             this.bt_teste = new System.Windows.Forms.Button();
             this.bt_edit = new System.Windows.Forms.Button();
+            this.pb_progress = new System.Windows.Forms.PictureBox();
             this.tb_main.SuspendLayout();
             this.tb_db.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_progress)).BeginInit();
             this.SuspendLayout();
             // 
             // tb_main
@@ -209,6 +211,7 @@
             this.flowLayoutPanel1.Controls.Add(this.bt_save);
             this.flowLayoutPanel1.Controls.Add(this.bt_teste);
             this.flowLayoutPanel1.Controls.Add(this.bt_edit);
+            this.flowLayoutPanel1.Controls.Add(this.pb_progress);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 263);
@@ -261,6 +264,17 @@
             this.bt_edit.UseVisualStyleBackColor = true;
             this.bt_edit.Click += new System.EventHandler(this.bt_edit_Click_1);
             // 
+            // pb_progress
+            // 
+            this.pb_progress.Image = global::Integrador.Properties.Resources.loader2;
+            this.pb_progress.Location = new System.Drawing.Point(177, 8);
+            this.pb_progress.Name = "pb_progress";
+            this.pb_progress.Size = new System.Drawing.Size(30, 30);
+            this.pb_progress.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_progress.TabIndex = 13;
+            this.pb_progress.TabStop = false;
+            this.pb_progress.Visible = false;
+            // 
             // frm_db
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,6 +292,7 @@
             this.tb_db.ResumeLayout(false);
             this.tb_db.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_progress)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -303,5 +318,6 @@
         private System.Windows.Forms.Button bt_save;
         private System.Windows.Forms.Button bt_teste;
         private System.Windows.Forms.Button bt_edit;
+        public System.Windows.Forms.PictureBox pb_progress;
     }
 }

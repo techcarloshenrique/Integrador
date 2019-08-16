@@ -76,7 +76,7 @@ namespace Integrador
                 }
                 this.Close();
                 //(this.Owner as frm_main).gerarCargaVendedores(vendedor, false);
-                (this.Owner as frm_main).gerarCargaVendedoresTabela(userId, userName, false);
+                (this.Owner as frm_main).gerarCargaUsuariosTabela(userId, userName, false);
 
             }
             else {
@@ -105,7 +105,7 @@ namespace Integrador
                 }
                 this.Close();
                 //(this.Owner as frm_main).gerarCargaVendedores(vendedor, false);
-                (this.Owner as frm_main).gerarCargaVendedoresTabela(userId, userName, true);
+                (this.Owner as frm_main).gerarCargaUsuariosTabela(userId, userName, true);
 
             }
             else

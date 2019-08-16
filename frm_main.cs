@@ -23,6 +23,7 @@ namespace Integrador
         {
 
             String[] arguments = Environment.GetCommandLineArgs();
+            
 
             if (arguments.Length > 2 && arguments[1] == "--site")
             {
@@ -34,33 +35,15 @@ namespace Integrador
             else {
 
 
-                String ambient = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-                String folder = "\\Sonic";
-
-                if (!Directory.Exists(ambient + folder))
-                {
-
-                    Properties.Settings.Default.DEFAULT_PATH = ambient + folder + "\\Sonic";
-                    Properties.Settings.Default.PROCESSADOS = ambient + folder + "\\Processados";
-                    Properties.Settings.Default.RECEBIDOS = ambient + folder + "\\Recebidos";
-                    Properties.Settings.Default.VENDEDORES = ambient + folder + "\\Vendedores";
-                    Properties.Settings.Default.QUERYS = ambient + folder + "\\Querys";
-                    Properties.Settings.Default.SITES = ambient + folder + "\\Sites";
-                    Properties.Settings.Default.CARGA = ambient + folder + "\\Carga";
-                    Properties.Settings.Default.IMAGENS = ambient + folder + "\\Imagens";
-                    Properties.Settings.Default.Save();
-                    Properties.Settings.Default.Reload();
-
-                    System.IO.Directory.CreateDirectory(ambient + folder);
-                    System.IO.Directory.CreateDirectory(ambient + folder + "\\Sites");
-                    System.IO.Directory.CreateDirectory(ambient + folder + "\\Carga");
-                    System.IO.Directory.CreateDirectory(ambient + folder + "\\Querys");
-                    System.IO.Directory.CreateDirectory(ambient + folder + "\\Recebidos");
-                    System.IO.Directory.CreateDirectory(ambient + folder + "\\Processados");
-                    System.IO.Directory.CreateDirectory(ambient + folder + "\\Vendedores");
-                    System.IO.Directory.CreateDirectory(ambient + folder + "\\Imagens");
-
-                }
+                Util.Arquivo u = new Util.Arquivo();
+                u.createFolder("\\Sonic", true);
+                u.createFolder("\\Sonic\\Usuarios", true);
+                u.createFolder("\\Sonic\\Recebidos", true);
+                u.createFolder("\\Sonic\\Processados", true);
+                u.createFolder("\\Sonic\\Usuarios", true);
+                u.createFolder("\\Sonic\\Querys", true);
+                u.createFolder("\\Sonic\\Sites", true);
+                u.createFolder("\\Sonic\\Imagens", true);
 
                 if (Properties.Settings.Default.SITE == "")
                 {
@@ -75,19 +58,19 @@ namespace Integrador
                     InitializeComponent();
                     //notifyIcon1.Icon = new Icon(GetType(), "add.ico");
                     loadDashboard();
-                    Conexao conn = new Conexao();
+                    Connect conn = new Connect();
                 }
 
 
             }
 
-            
+
 
         }
 
         public void loadDashboard() {
 
-            if (!ConexaoLoad())
+            if (!Connect.validarConexao())
             {
                 tool_home.Enabled = false;
                 menu_ts_trans.Visible = false;
@@ -143,7 +126,7 @@ namespace Integrador
                         request.UseBinary = true;
                         request.Timeout = 60000 * 2;
 
-                        lb_progress.Text = "ENVIANDO -> " + file.Name +" - "+ count+"/"+files.Length;
+                        lb_progress.Text = "ENVIANDO -> " + file.Name + " - " + count + "/" + files.Length;
 
                         //Thread.Sleep(500);
 
@@ -166,7 +149,7 @@ namespace Integrador
                 }
                 catch (WebException ex)
                 {
-                    MessageBox.Show(ex.ToString(), "Erro");
+                    MessageBox.Show(ex.ToString(), ex.StackTrace);
                 }
 
                 DateTime dt = DateTime.Now;
@@ -238,6 +221,8 @@ namespace Integrador
 
                         //throw new Exception("Erro ao tentar enviar o arquivo...\n");
                         MessageBox.Show(ex.ToString(), "Erro");
+                        new LogWriter(ex.Message, ex.StackTrace);
+
                     }
 
                     DateTime dt = DateTime.Now;
@@ -307,7 +292,7 @@ namespace Integrador
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    new LogWriter(ex.Message, ex.StackTrace);
                 }
             }
 
@@ -331,6 +316,7 @@ namespace Integrador
                 catch (Exception ex)
                 {
                     MessageBox.Show("Erro ao criar a pasta", ex.ToString());
+                    new LogWriter(ex.Message, ex.StackTrace);
                 }
                 return;
             }
@@ -367,11 +353,11 @@ namespace Integrador
                     conn.Open();
 
                 }
-                catch (SqlException)
+                catch (SqlException ex)
                 {
                     conn = null;
+                    new LogWriter(ex.Message, ex.StackTrace);
 
-                    // UMA BOA PRATICA É GRAVAR A EXCEÇÃO EM UM ARQUIVO DE LOG
                 }
 
                 // RETORNA A CONEXAO
@@ -417,6 +403,7 @@ namespace Integrador
 
         public void montarResultadoSite(SqlConnection conexao, string nome_arquivo, string query)
         {
+
 
             try
             {
@@ -489,15 +476,15 @@ namespace Integrador
 
             }
 
-            catch (Exception erro)
+            catch (Exception ex)
             {
 
-                MessageBox.Show("Erro ao exportar o arquivo " + nome_arquivo + "\n\nDetalhe do erro: " + erro.Message);
-
+                MessageBox.Show("Erro ao exportar o arquivo " + nome_arquivo + "\n\nDetalhe do erro: " + ex.Message);
+                new LogWriter(ex.Message, ex.StackTrace);
             }
         }
 
-        public void montarResultadoSiteDataBase(SqlConnection conexao, string secao, string query)
+        public void montarResultadoSiteTabela(SqlConnection conexao, string secao, string query)
         {
 
             try
@@ -526,7 +513,7 @@ namespace Integrador
                     // SE A CONSULTA RETORNAR LINHAS
                     if (DR.HasRows)
                     {
-
+                        
                         // CRIANDO O ARQUIVO PARA A GRAVAÇÃO DOS DADOS
                         StreamWriter valor = new StreamWriter(caminho + site, true, Encoding.GetEncoding("ISO-8859-1"));
 
@@ -543,8 +530,7 @@ namespace Integrador
                         // ENQUANTO HOUVER LEITURA NAS LINHAS DO RETORNO
                         while (DR.Read())
                         {
-
-                            valor.Write(a + "=");
+             
 
                             // LAÇO PARA LER AS COLUNAS DA LINHA
                             for (int i = 0; i < DR.FieldCount; i++)
@@ -569,11 +555,11 @@ namespace Integrador
 
             }
 
-            catch (Exception erro)
+            catch (Exception ex)
             {
 
-                MessageBox.Show("Erro ao exportar o arquivo " + secao + "\n\nDetalhe do erro: " + erro.Message);
-
+                MessageBox.Show("Erro ao exportar o arquivo " + secao + "\n\nDetalhe do erro: " + ex.Message);
+                new LogWriter(ex.Message, ex.StackTrace);
             }
         }
 
@@ -593,8 +579,8 @@ namespace Integrador
                 int rows = tabela.Rows.Count;
 
                 // CAMINHO PADRÃO PARA GERAÇÃO DO(S) ARQUIVO(S)
-                string caminho = Properties.Settings.Default.VENDEDORES + "\\";
- 
+                string caminho = Properties.Settings.Default.USUARIOS + "\\";
+
                 // LAÇO DA TABELA
                 using (SqlDataReader DR = retorno.ExecuteReader())
                 {
@@ -649,11 +635,11 @@ namespace Integrador
 
             }
 
-            catch (Exception erro)
+            catch (Exception ex)
             {
 
-                MessageBox.Show("Erro ao exportar o arquivo " + saida + "\n\nDetalhe do erro: " + erro.Message);
-
+                MessageBox.Show("Erro ao exportar o arquivo " + saida + "\n\nDetalhe do erro: " + ex.Message);
+                new LogWriter(ex.Message, ex.StackTrace);
             }
         }
 
@@ -680,7 +666,8 @@ namespace Integrador
             // STRING QUE RECEBE O DIRETÓRIO    
             string diretorio = Properties.Settings.Default.QUERYS + "\\";
 
-            try {
+            try
+            {
 
                 // INSTANCIANDO UMA NOVA CONEXAO
                 SqlConnection conn = Conexao.obterConexao();
@@ -719,7 +706,8 @@ namespace Integrador
                         }
 
                     }
-                    else {
+                    else
+                    {
 
                         img_tick.Image = Properties.Resources.error;
                         lb_progress.Visible = true;
@@ -738,8 +726,12 @@ namespace Integrador
                     Properties.Settings.Default.Reload();
                     img_tick.Image = Properties.Resources.tick;
                     lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
+
+                   
+
                 }
-                else {
+                else
+                {
                     img_tick.Image = Properties.Resources.error;
                     lb_progress.Visible = true;
                     lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
@@ -748,13 +740,20 @@ namespace Integrador
 
 
             }
-            catch (SqlException e)
+            catch (SqlException ex)
             {
                 img_tick.Image = Properties.Resources.error;
                 lb_progress.Visible = true;
                 lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
-                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + e.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + ex.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                new LogWriter(ex.Message, ex.StackTrace);
             }
+            finally {
+
+                
+
+            }
+
 
         }
 
@@ -783,7 +782,7 @@ namespace Integrador
             }
 
             // APAGA TODOS OS ARQUIVOS DO DIRETORIO DE VENDEDORES
-            DirectoryInfo vend = new DirectoryInfo(Properties.Settings.Default.VENDEDORES);
+            DirectoryInfo vend = new DirectoryInfo(Properties.Settings.Default.USUARIOS);
 
             try
             {
@@ -825,8 +824,8 @@ namespace Integrador
 
                             DR.GetValues(values);
 
-                            id[i-1] = values[0].ToString();
-                            name[i-1] = values[1].ToString();
+                            id[i - 1] = values[0].ToString();
+                            name[i - 1] = values[1].ToString();
 
                             i++;
 
@@ -862,7 +861,7 @@ namespace Integrador
                                 String pessoa = name[x];
                                 String line = sr.ReadLine();
 
-                                DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.VENDEDORES);
+                                DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.USUARIOS);
 
                                 foreach (FileInfo txt in di.GetFiles(saida))
                                 {
@@ -870,7 +869,7 @@ namespace Integrador
                                 }
 
                                 int count = x + 1;
-                                lb_progress.Text = "EXPORTANDO -> " + pessoa + " [" + saida + "] - "+ count + "/" + rows;
+                                lb_progress.Text = "EXPORTANDO -> " + pessoa + " [" + saida + "] - " + count + "/" + rows;
 
                                 // LAÇO PARA CONCATENAR AS LINHAS E MONTAR CADA QUERY CONTIDA NO ARQUIVO
                                 while (!sr.EndOfStream)
@@ -957,20 +956,24 @@ namespace Integrador
                     MessageBox.Show("Não foi possível realizar a operação.", "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                
+
 
             }
-            catch (SqlException e)
+            catch (SqlException ex)
             {
                 img_tick.Image = Properties.Resources.error;
                 lb_progress.Visible = true;
                 lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
-                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + e.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + ex.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                new LogWriter(ex.Message, ex.StackTrace);
+            }
+            finally {
+                
             }
 
         }
 
-        public void montarSiteDatabase()
+        public void montarSiteTabela()
         {
             // EXIBINDO O PROGRESS E O LABEL
             img_tick.Visible = true;
@@ -1027,16 +1030,22 @@ namespace Integrador
                     if (countQuery > 0)
                     {
 
+                        Database db = new Database();
+
+                        db.saveSincronizacao("saida", "site");
+                        db.saveSincronizacaoItens(Properties.Settings.Default.SITE+".TXT");
+                        db.closeConn();
+
                         String query = String.Empty;
                         String secao = String.Empty;
                         for (int x = 0; x < countQuery; x++)
                         {
-
+                           
                             query = lista.Rows[x].ItemArray[5].ToString();
                             secao = lista.Rows[x].ItemArray[2].ToString();
 
                             // AQUI DECIDE O QUE FAZER COM A QUERY GERADA
-                            montarResultadoSiteDataBase(conn, secao, query);
+                            montarResultadoSiteTabela(conn, secao, query);
                             // FECHANDO O OBJETO STREAMREADER
 
                         }
@@ -1076,17 +1085,21 @@ namespace Integrador
 
 
             }
-            catch (SqlException e)
+            catch (SqlException ex)
             {
                 img_tick.Image = Properties.Resources.error;
                 lb_progress.Visible = true;
                 lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
-                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + e.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + ex.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                new LogWriter(ex.Message, ex.StackTrace);
+            }
+            finally {
+               
             }
 
         }
 
-        public void montarCargaVendedoresDatabase(List<string> uId, List<string> uName, bool transmitir)
+        public void montarCargaUsuariosTabela(List<string> uId, List<string> uName, bool transmitir)
         {
 
             List<string> userId = uId;
@@ -1103,7 +1116,7 @@ namespace Integrador
 
                 // INSTANCIANDO UMA NOVA CONEXAO
                 SqlConnection connect = Conexao.obterConexao();
-             
+
                 if (connect != null && connect.State != ConnectionState.Closed)
                 {
 
@@ -1130,6 +1143,8 @@ namespace Integrador
                     if (countQuery > 0)
                     {
 
+                        Database db = new Database();
+                        db.saveSincronizacao("saida","carga");
                         String query = String.Empty;
                         String secao = String.Empty;
                         // LAÇO PARA CADA VENDEDOR SELECIONADO
@@ -1139,12 +1154,25 @@ namespace Integrador
                             String saida = userId[x].ToString().PadLeft(5, '0') + ".TXT";
                             String pessoa = userName[x].ToString();
 
-                            DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.VENDEDORES);
+                            db.saveSincronizacaoItens(saida);
 
-                            foreach (FileInfo txt in di.GetFiles(saida))
+                            DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.USUARIOS);
+
+                            if (di.Exists)
                             {
-                                txt.Delete();
+                                foreach (FileInfo txt in di.GetFiles(saida))
+                                {
+                                        txt.Delete();
+                                }
                             }
+                            else {
+
+                                Util.Arquivo u = new Util.Arquivo();
+                                u.createFolder(Properties.Settings.Default.USUARIOS, false);
+
+                             }
+
+             
 
                             int countVend = x + 1;
                             lb_progress.Text = "EXPORTANDO -> " + pessoa + " [" + saida + "] - " + countVend + "/" + userId.Count;
@@ -1155,7 +1183,8 @@ namespace Integrador
                                 query = lista.Rows[y].ItemArray[5].ToString();
                                 secao = lista.Rows[y].ItemArray[2].ToString();
 
-                                if (query.Contains("?")) {
+                                if (query.Contains("?"))
+                                {
                                     query = query.Replace("?", userId[y]);
                                 }
 
@@ -1166,41 +1195,40 @@ namespace Integrador
 
                         }
 
+                        db.closeConn();
+
+                        if (transmitir)
+                        {
+                            enviarCargaParaFtp();
+                        }
+                        else
+                        {
+
+                            goto EndSuccess;
+
+                        }
 
                     }
-                   
-                    else {
 
-                        DialogResult res =  MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_QUERY para gerar carga. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+                    else
+                    {
+
+                        Conexao.fecharConexao(connect);
+                        img_tick.Image = Properties.Resources.tick;
+                        lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
+                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_QUERY para gerar carga. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+
                         if (res == DialogResult.Yes)
                         {
                             String form = "frm_query";
                             frm_query q = new frm_query();
-                            abrirFormDialog(form, q);
+                            abrirFormDialog(form, q);                      
                         }
-                  
-                    }
 
-
-                    if (transmitir)
-                    {
-                        enviarCargaParaFtp();
-                    }
-                    else
-                    {
-
-                        // FECHANDO A CONEXAO COM O BANCO
-                        Conexao.fecharConexao(connect);
-                        DateTime dt = DateTime.Now;
-                        string data = (string.Format("{0:dd/MM/yyyy}", dt));
-                        string hora = (string.Format("{0:HH:mm}", dt));
-                        Properties.Settings.Default.LASTEXPORT = "ÚLTIMA EXPORTAÇÃO FINALIZADA EM " + data + " ÀS " + hora;
-                        Properties.Settings.Default.Save();
-                        Properties.Settings.Default.Reload();
-                        img_tick.Image = Properties.Resources.tick;
-                        lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
+                        
 
                     }
+
 
                 }
                 else
@@ -1211,15 +1239,31 @@ namespace Integrador
                     MessageBox.Show("Não foi possível realizar a operação.", "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
+            EndSuccess:
+
+                // FECHANDO A CONEXAO COM O BANCO
+                Conexao.fecharConexao(connect);
+                DateTime dt = DateTime.Now;
+                string data = (string.Format("{0:dd/MM/yyyy}", dt));
+                string hora = (string.Format("{0:HH:mm}", dt));
+                Properties.Settings.Default.LASTEXPORT = "ÚLTIMA EXPORTAÇÃO FINALIZADA EM " + data + " ÀS " + hora;
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+                img_tick.Image = Properties.Resources.tick;
+                lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
 
 
             }
-            catch (SqlException e)
+            catch (SqlException ex)
             {
                 img_tick.Image = Properties.Resources.error;
                 lb_progress.Visible = true;
                 lb_progress.Text = "BASE DE DADOS INDISPONÍVEL NO MOMENTO.";
-                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + e.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Não foi possível realizar a operação.\n\nDetalhe do erro: " + ex.Message, "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                new LogWriter(ex.Message, ex.StackTrace);
+            }
+            finally {
+                
             }
 
         }
@@ -1333,6 +1377,10 @@ namespace Integrador
         private void frm_main_Load(object sender, EventArgs e)
         {
 
+            string logfile = System.IO.Path.GetDirectoryName(Application.ExecutablePath)+"\\sonic.log";
+            if (!File.Exists(logfile)) {
+                File.Create(logfile).Dispose();
+            }
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
             pb_close.Location = new Point(this.Width - 60, 30);
             pb_change.Location = new Point(this.Width - 100, 30);
@@ -1391,6 +1439,7 @@ namespace Integrador
             }
             catch(Exception ex) {
                 MessageBox.Show(ex.ToString(), "Erro", MessageBoxButtons.OK);
+                new LogWriter(ex.Message, ex.StackTrace);
             }
 
             return false;
@@ -1588,7 +1637,7 @@ namespace Integrador
         {
             //Thread site = new Thread(() => gerarSite());
             //site.Start();
-            Thread site = new Thread(() => montarSiteDatabase());
+            Thread site = new Thread(() => montarSiteTabela());
             site.Start();
         }
 
@@ -1674,15 +1723,15 @@ namespace Integrador
             gerarT.Start();
         }
 
-        public void gerarCargaVendedoresTabela(List<string> userId, List<string> userName, bool transmitir)
+        public void gerarCargaUsuariosTabela(List<string> userId, List<string> userName, bool transmitir)
         {
-            Thread gerarT = new Thread(() => montarCargaVendedoresDatabase(userId, userName, transmitir));
+            Thread gerarT = new Thread(() => montarCargaUsuariosTabela(userId, userName, transmitir));
             gerarT.Start();
         }
 
         public void enviarCargaParaFtp() {
-            DirectoryInfo from = new DirectoryInfo(Properties.Settings.Default.VENDEDORES);
-            String to = Properties.Settings.Default.FTP_VENDEDORES;
+            DirectoryInfo from = new DirectoryInfo(Properties.Settings.Default.USUARIOS);
+            String to = Properties.Settings.Default.FTP_USUARIOS;
             Thread enviar = new Thread(() => EnviarArquivosFTP(from, to, "*.TXT", false));
             enviar.Start();
         }
@@ -1703,6 +1752,20 @@ namespace Integrador
             frm_query query = new frm_query();
             abrirFormDialog(form, query);
 
+        }
+
+        private void menu_ts_logs_Click(object sender, EventArgs e)
+        {
+            String form = "frm_log";
+            frm_log l = new frm_log();
+            abrirFormDialog(form, l);
+        }
+
+        private void menu_ts_sincronizacoes_Click(object sender, EventArgs e)
+        {
+            String form = "frm_sinc";
+            frm_sinc s = new frm_sinc();
+            abrirFormDialog(form, s);
         }
     }
 }

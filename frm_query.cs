@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -64,48 +65,16 @@ namespace Integrador
             c.Width = 30;
             d.Width = 50;
             e.Width = 50;
-            //DataGridViewCell cell = dgv_query.Rows[dgv_query.SelectedRows[0].Index].Cells[4];
-            //DataGridViewCheckBoxCell chkCell = cell as DataGridViewCheckBoxCell;
-            //chkCell.Value = false;
-            //chkCell.FlatStyle = FlatStyle.Flat;
-            //chkCell.Style.ForeColor = Color.DarkGray;
-            //cell.ReadOnly = true;
-            //dgv_query.Columns[4].DefaultCellStyle.BackColor = Color.LightGray;
-            //dgv_query.Columns[4].DefaultCellStyle.ForeColor = Color.DarkGray;
+
 
             for (int i = 0; i < dgv_query.Columns.Count; i++)
             {
 
-                dgv_query.Columns[i].HeaderText = FirstCharToUpper(dgv_query.Columns[i].Name.Replace("_", " "));
+                dgv_query.Columns[i].HeaderText = Util.FirstCharToUpper(dgv_query.Columns[i].Name.Replace("_", " "));
 
             }
 
 
-        }
-
-        public static string FirstCharToUpper(string value)
-        {
-            char[] array = value.ToCharArray();
-
-            if (array.Length >= 1)
-            {
-                if (char.IsLower(array[0]))
-                {
-                    array[0] = char.ToUpper(array[0]);
-                }
-            }
-
-            for (int i = 1; i < array.Length; i++)
-            {
-                if (array[i - 1] == ' ')
-                {
-                    if (char.IsLower(array[i]))
-                    {
-                        array[i] = char.ToUpper(array[i]);
-                    }
-                }
-            }
-            return new string(array);
         }
 
         private void bt_save_Click(object sender, EventArgs e)
@@ -122,44 +91,32 @@ namespace Integrador
 
                 lb_result.Visible = false;
 
-                try
-                {
-                    int usuario = 0;
-                    String _query = rtb_query.Text;
-                    if (cb_usuario.Checked)
-                    {
-                        _query += " WHERE USUARIO = ?";
-                        usuario = 1;
-                    }
-                    conn = frm_main.Conexao.obterConexao();
-                    String nome_view = cb_view.Text;
-                    String nome_secao = tb_secao.Text;
-                    String destino = cb_destino.SelectedItem.ToString().ToLower();
-                  
-                    String query = "INSERT INTO SONIC_QUERY " +
-                                    "(id, nome_view, nome_secao, destino, usuario, query) VALUES " +
-                                    "((SELECT ISNULL(MAX(id)+1,1) FROM SONIC_QUERY WITH(SERIALIZABLE, UPDLOCK)), '" + nome_view + "', '" + nome_secao + "', '" + destino + "', " +usuario+ ", '" + _query + "')";
-                    SqlCommand com = new SqlCommand(query, conn);
-                    com.ExecuteNonQuery();
-                    loadDataGridView();
-                    conn.Close();
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally {
+                int usuario = 0;
+                String _query = rtb_query.Text;
 
-                    tb_secao.Text = "";
-                    rtb_query.Text = "";
-                    conn.Close();
+                if (cb_usuario.Checked)
+                {
+                    _query += " WHERE USUARIO = ?";
+                    usuario = 1;
                 }
-              
+                String nome_view = cb_view.Text;
+                String nome_secao = tb_secao.Text;
+                String destino = cb_destino.SelectedItem.ToString().ToLower();
+                  
+                String query = 
+                    "INSERT INTO SONIC_QUERY " +
+                    "(id, nome_view, nome_secao, destino, usuario, query) VALUES " +
+                    "((SELECT ISNULL(MAX(id)+1,1) FROM SONIC_QUERY WITH(SERIALIZABLE, UPDLOCK)), '" + nome_view + "', '" + nome_secao + "', '" + destino + "', " +usuario+ ", '" + _query + "')";
+
+                Database d = new Database();
+                d.Insert(query);
+                d.closeConn();
+                loadDataGridView();
+                tb_secao.Text = "";
+                rtb_query.Text = "";
 
             }
 
-           
-            
         }
 
         private void bt_testar_Click(object sender, EventArgs e)
@@ -175,7 +132,7 @@ namespace Integrador
                 BackgroundWorker bgw = new BackgroundWorker();
                 bgw = new BackgroundWorker();
                 bgw.WorkerReportsProgress = true;
-                bgw.ProgressChanged += new ProgressChangedEventHandler(bgw_ProgressChanged);
+                //bgw.ProgressChanged += new ProgressChangedEventHandler(bgw_ProgressChanged);
                 bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_RunWorkerCompleted);
                 bgw.DoWork += new DoWorkEventHandler(bgw_DoWork);
                 bgw.RunWorkerAsync();
@@ -189,7 +146,7 @@ namespace Integrador
         {
 
             try {
-                conn = frm_main.Conexao.obterConexao();
+                conn = Connect.obterConexao();
                 SqlCommand retorno = new SqlCommand(query, conn);
                 SqlDataReader row = retorno.ExecuteReader();
                 tabela = new DataTable();
@@ -198,11 +155,6 @@ namespace Integrador
             catch (SqlException ex) {
                 MessageBox.Show(ex.Message);
             }
-            
-        }
-
-        void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
             
         }
 
@@ -243,7 +195,6 @@ namespace Integrador
                     try
                     {
 
-                        DataGridViewSelectedRowCollection row;
                         String id = String.Empty;
                         String query = String.Empty;
                         conn = frm_main.Conexao.obterConexao();

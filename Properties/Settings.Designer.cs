@@ -194,12 +194,12 @@ namespace Integrador.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("/server_sonic/usuarios/")]
-        public string FTP_VENDEDORES {
+        public string FTP_USUARIOS {
             get {
-                return ((string)(this["FTP_VENDEDORES"]));
+                return ((string)(this["FTP_USUARIOS"]));
             }
             set {
-                this["FTP_VENDEDORES"] = value;
+                this["FTP_USUARIOS"] = value;
             }
         }
         
@@ -337,13 +337,13 @@ namespace Integrador.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\Vendedores")]
-        public string VENDEDORES {
+        [global::System.Configuration.DefaultSettingValueAttribute("\\Usuarios")]
+        public string USUARIOS {
             get {
-                return ((string)(this["VENDEDORES"]));
+                return ((string)(this["USUARIOS"]));
             }
             set {
-                this["VENDEDORES"] = value;
+                this["USUARIOS"] = value;
             }
         }
     }

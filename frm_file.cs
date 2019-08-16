@@ -37,7 +37,7 @@ namespace Integrador
                 // BOTÃO PARA SALVAR OS DIRETORIOS
                 Properties.Settings.Default.PROCESSADOS = tb_processado.Text;
                 Properties.Settings.Default.RECEBIDOS = tb_recebido.Text;
-                Properties.Settings.Default.VENDEDORES = tb_vendedores.Text;
+                Properties.Settings.Default.USUARIOS = tb_vendedores.Text;
                 Properties.Settings.Default.QUERYS = tb_query.Text;
                 Properties.Settings.Default.SITES = tb_site.Text;
                 Properties.Settings.Default.CARGA = tb_carga.Text;
@@ -89,12 +89,12 @@ namespace Integrador
 
                 tb_recebido.Text = Properties.Settings.Default.RECEBIDOS;
                 tb_processado.Text = Properties.Settings.Default.PROCESSADOS;
-                tb_vendedores.Text = Properties.Settings.Default.VENDEDORES;
+                tb_vendedores.Text = Properties.Settings.Default.USUARIOS;
                 tb_query.Text = Properties.Settings.Default.QUERYS;
                 tb_site.Text = Properties.Settings.Default.SITES;
                 tb_carga.Text = Properties.Settings.Default.CARGA;
                 tb_imagens.Text = Properties.Settings.Default.IMAGENS;
-                tb_ftp_vend.Text = Properties.Settings.Default.FTP_VENDEDORES;
+                tb_ftp_vend.Text = Properties.Settings.Default.FTP_USUARIOS;
                 tb_ftp_imagens.Text = Properties.Settings.Default.FTP_IMAGENS;
 
 

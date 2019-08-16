@@ -63,6 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connect.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="frm_dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +107,12 @@
     <Compile Include="frm_carga.Designer.cs">
       <DependentUpon>frm_carga.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_log.Designer.cs">
+      <DependentUpon>frm_log.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,12 +149,19 @@
     <Compile Include="frm_query.Designer.cs">
       <DependentUpon>frm_query.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_sinc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_sinc.Designer.cs">
+      <DependentUpon>frm_sinc.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_vend.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frm_vend.Designer.cs">
       <DependentUpon>frm_vend.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogWriter.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -162,6 +177,7 @@
     <Compile Include="site.Designer.cs">
       <DependentUpon>site.cs</DependentUpon>
     </Compile>
+    <Compile Include="Util.cs" />
     <EmbeddedResource Include="frm_dashboard.resx">
       <DependentUpon>frm_dashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +199,9 @@
     <EmbeddedResource Include="frm_carga.resx">
       <DependentUpon>frm_carga.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frm_log.resx">
+      <DependentUpon>frm_log.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_login.resx">
       <DependentUpon>frm_login.cs</DependentUpon>
     </EmbeddedResource>
@@ -200,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_query.resx">
       <DependentUpon>frm_query.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_sinc.resx">
+      <DependentUpon>frm_sinc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_vend.resx">
       <DependentUpon>frm_vend.cs</DependentUpon>

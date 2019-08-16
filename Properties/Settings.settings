@@ -44,7 +44,7 @@
     <Setting Name="FTP_IMAGENS" Type="System.String" Scope="User">
       <Value Profile="(Default)">/server_sonic/imagens/</Value>
     </Setting>
-    <Setting Name="FTP_VENDEDORES" Type="System.String" Scope="User">
+    <Setting Name="FTP_USUARIOS" Type="System.String" Scope="User">
       <Value Profile="(Default)">/server_sonic/usuarios/</Value>
     </Setting>
     <Setting Name="IMAGENS" Type="System.String" Scope="User">
@@ -80,8 +80,8 @@
     <Setting Name="PROCESSADOS" Type="System.String" Scope="User">
       <Value Profile="(Default)">\Processados</Value>
     </Setting>
-    <Setting Name="VENDEDORES" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\Vendedores</Value>
+    <Setting Name="USUARIOS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\Usuarios</Value>
     </Setting>
   </Settings>
 </SettingsFile>

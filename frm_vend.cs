@@ -67,17 +67,19 @@ namespace Integrador
 
             CheckBox chkBox = (CheckBox)sender;
             //string chkID = chkBox.ID;
-            bool allChecked = true;
+            //bool allChecked = true;
 
-            if (chkBox.Checked == false)
-                allChecked = false;
-
+            //if (chkBox.Checked == false) {
+            //    allChecked = false;
+            //}
+                
             foreach (CheckBox chkBoxes in boxes)
             {
                 if (chkBox.Checked == true)
                 {
-                    if (chkBoxes.Checked == false)
-                        allChecked = false;
+                    if (chkBoxes.Checked == false) {
+                    }
+                        //allChecked = false;
                 }
             }
            // this.CheckBoxIDALL.Checked = allChecked; //Here place the main CheckBox

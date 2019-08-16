@@ -61,33 +61,35 @@
             this.menu_ts_receber_pedidos = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_ts_consultas = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_ts_vend = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_ts_usuario = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_ts_janela = new System.Windows.Forms.ToolStripMenuItem();
             this.testesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dragAndDropToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_ts_ajuda = new System.Windows.Forms.ToolStripMenuItem();
             this.ajudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.menu_ts_sobre = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+            this.menu_ts_logs = new System.Windows.Forms.ToolStripMenuItem();
             this.ts_main = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ss_main = new System.Windows.Forms.StatusStrip();
+            this.lb_progress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ts_user = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ts_hora = new System.Windows.Forms.ToolStripStatusLabel();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.menu_ts_sincronizacoes = new System.Windows.Forms.ToolStripMenuItem();
+            this.pb_change = new System.Windows.Forms.PictureBox();
+            this.pb_close = new System.Windows.Forms.PictureBox();
             this.tool_home = new System.Windows.Forms.ToolStripButton();
             this.tool_db = new System.Windows.Forms.ToolStripButton();
             this.tool_ftp = new System.Windows.Forms.ToolStripButton();
             this.tool_ag = new System.Windows.Forms.ToolStripButton();
             this.tool_file = new System.Windows.Forms.ToolStripButton();
             this.tool_query = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tool_gerar_arquivos = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tool_ajuda = new System.Windows.Forms.ToolStripButton();
-            this.ss_main = new System.Windows.Forms.StatusStrip();
             this.img_tick = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lb_progress = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ts_user = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ts_hora = new System.Windows.Forms.ToolStripStatusLabel();
-            this.pb_change = new System.Windows.Forms.PictureBox();
-            this.pb_close = new System.Windows.Forms.PictureBox();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.ms_main.SuspendLayout();
             this.ts_main.SuspendLayout();
             this.ss_main.SuspendLayout();
@@ -328,7 +330,8 @@
             // 
             this.menu_ts_consultas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clientesToolStripMenuItem,
-            this.menu_ts_vend});
+            this.menu_ts_usuario,
+            this.menu_ts_sincronizacoes});
             this.menu_ts_consultas.Name = "menu_ts_consultas";
             this.menu_ts_consultas.Size = new System.Drawing.Size(71, 20);
             this.menu_ts_consultas.Text = "Consultas";
@@ -336,16 +339,16 @@
             // clientesToolStripMenuItem
             // 
             this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clientesToolStripMenuItem.Text = "Clientes";
             this.clientesToolStripMenuItem.Visible = false;
             // 
-            // menu_ts_vend
+            // menu_ts_usuario
             // 
-            this.menu_ts_vend.Name = "menu_ts_vend";
-            this.menu_ts_vend.Size = new System.Drawing.Size(135, 22);
-            this.menu_ts_vend.Text = "Vendedores";
-            this.menu_ts_vend.Click += new System.EventHandler(this.menu_ts_vend_Click);
+            this.menu_ts_usuario.Name = "menu_ts_usuario";
+            this.menu_ts_usuario.Size = new System.Drawing.Size(152, 22);
+            this.menu_ts_usuario.Text = "Usuarios";
+            this.menu_ts_usuario.Click += new System.EventHandler(this.menu_ts_vend_Click);
             // 
             // menu_ts_janela
             // 
@@ -360,7 +363,7 @@
             this.testesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dragAndDropToolStripMenuItem});
             this.testesToolStripMenuItem.Name = "testesToolStripMenuItem";
-            this.testesToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.testesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.testesToolStripMenuItem.Text = "Testes";
             // 
             // dragAndDropToolStripMenuItem
@@ -374,8 +377,9 @@
             // 
             this.menu_ts_ajuda.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ajudaToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.menu_ts_sobre});
+            this.menu_ts_sobre,
+            this.toolStripMenuItem6,
+            this.menu_ts_logs});
             this.menu_ts_ajuda.Name = "menu_ts_ajuda";
             this.menu_ts_ajuda.Size = new System.Drawing.Size(50, 20);
             this.menu_ts_ajuda.Text = "Ajuda";
@@ -386,17 +390,24 @@
             this.ajudaToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.ajudaToolStripMenuItem.Text = "Ajuda";
             // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(102, 6);
-            // 
             // menu_ts_sobre
             // 
             this.menu_ts_sobre.Name = "menu_ts_sobre";
             this.menu_ts_sobre.Size = new System.Drawing.Size(105, 22);
             this.menu_ts_sobre.Text = "Sobre";
             this.menu_ts_sobre.Click += new System.EventHandler(this.menu_ts_sobre_Click);
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(102, 6);
+            // 
+            // menu_ts_logs
+            // 
+            this.menu_ts_logs.Name = "menu_ts_logs";
+            this.menu_ts_logs.Size = new System.Drawing.Size(105, 22);
+            this.menu_ts_logs.Text = "Logs";
+            this.menu_ts_logs.Click += new System.EventHandler(this.menu_ts_logs_Click);
             // 
             // ts_main
             // 
@@ -422,6 +433,105 @@
             this.ts_main.TabIndex = 3;
             this.ts_main.Tag = "Teste";
             this.ts_main.Text = "Barra de Ferramentas";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
+            // 
+            // ss_main
+            // 
+            this.ss_main.AutoSize = false;
+            this.ss_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.img_tick,
+            this.lb_progress,
+            this.ts_user,
+            this.ts_hora});
+            this.ss_main.Location = new System.Drawing.Point(0, 427);
+            this.ss_main.Name = "ss_main";
+            this.ss_main.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ss_main.Size = new System.Drawing.Size(880, 30);
+            this.ss_main.TabIndex = 1;
+            this.ss_main.Text = "Status";
+            // 
+            // lb_progress
+            // 
+            this.lb_progress.AutoSize = false;
+            this.lb_progress.AutoToolTip = true;
+            this.lb_progress.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.lb_progress.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.lb_progress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lb_progress.Name = "lb_progress";
+            this.lb_progress.Size = new System.Drawing.Size(400, 25);
+            this.lb_progress.Text = "Progresso";
+            this.lb_progress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lb_progress.Visible = false;
+            // 
+            // ts_user
+            // 
+            this.ts_user.AutoSize = false;
+            this.ts_user.AutoToolTip = true;
+            this.ts_user.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.ts_user.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.ts_user.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ts_user.Name = "ts_user";
+            this.ts_user.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.ts_user.Size = new System.Drawing.Size(200, 25);
+            this.ts_user.ToolTipText = "Usuário";
+            // 
+            // ts_hora
+            // 
+            this.ts_hora.AutoSize = false;
+            this.ts_hora.AutoToolTip = true;
+            this.ts_hora.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.ts_hora.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.ts_hora.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ts_hora.Name = "ts_hora";
+            this.ts_hora.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.ts_hora.Size = new System.Drawing.Size(100, 25);
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            // 
+            // menu_ts_sincronizacoes
+            // 
+            this.menu_ts_sincronizacoes.Name = "menu_ts_sincronizacoes";
+            this.menu_ts_sincronizacoes.Size = new System.Drawing.Size(152, 22);
+            this.menu_ts_sincronizacoes.Text = "Sincronizações";
+            this.menu_ts_sincronizacoes.Click += new System.EventHandler(this.menu_ts_sincronizacoes_Click);
+            // 
+            // pb_change
+            // 
+            this.pb_change.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_change.Image = ((System.Drawing.Image)(resources.GetObject("pb_change.Image")));
+            this.pb_change.Location = new System.Drawing.Point(803, 30);
+            this.pb_change.Name = "pb_change";
+            this.pb_change.Size = new System.Drawing.Size(34, 34);
+            this.pb_change.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_change.TabIndex = 7;
+            this.pb_change.TabStop = false;
+            this.pb_change.Click += new System.EventHandler(this.pb_change_Click);
+            // 
+            // pb_close
+            // 
+            this.pb_close.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_close.Image = ((System.Drawing.Image)(resources.GetObject("pb_close.Image")));
+            this.pb_close.Location = new System.Drawing.Point(843, 30);
+            this.pb_close.Name = "pb_close";
+            this.pb_close.Size = new System.Drawing.Size(34, 34);
+            this.pb_close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_close.TabIndex = 5;
+            this.pb_close.TabStop = false;
+            this.pb_close.Click += new System.EventHandler(this.pb_cancel_Click);
             // 
             // tool_home
             // 
@@ -484,11 +594,6 @@
             this.tool_query.Text = "Query\'s";
             this.tool_query.Click += new System.EventHandler(this.tool_query_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
-            // 
             // tool_gerar_arquivos
             // 
             this.tool_gerar_arquivos.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -498,11 +603,6 @@
             this.tool_gerar_arquivos.Size = new System.Drawing.Size(23, 20);
             this.tool_gerar_arquivos.Text = "Gerar Arquivos";
             this.tool_gerar_arquivos.Click += new System.EventHandler(this.tool_gerar_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
             // 
             // tool_ajuda
             // 
@@ -516,21 +616,6 @@
             this.tool_ajuda.Text = "Ajuda";
             this.tool_ajuda.Click += new System.EventHandler(this.tool_ajuda_Click);
             // 
-            // ss_main
-            // 
-            this.ss_main.AutoSize = false;
-            this.ss_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.img_tick,
-            this.lb_progress,
-            this.ts_user,
-            this.ts_hora});
-            this.ss_main.Location = new System.Drawing.Point(0, 427);
-            this.ss_main.Name = "ss_main";
-            this.ss_main.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.ss_main.Size = new System.Drawing.Size(880, 30);
-            this.ss_main.TabIndex = 1;
-            this.ss_main.Text = "Status";
-            // 
             // img_tick
             // 
             this.img_tick.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
@@ -540,73 +625,6 @@
             this.img_tick.Padding = new System.Windows.Forms.Padding(5);
             this.img_tick.Size = new System.Drawing.Size(30, 25);
             this.img_tick.Visible = false;
-            // 
-            // lb_progress
-            // 
-            this.lb_progress.AutoSize = false;
-            this.lb_progress.AutoToolTip = true;
-            this.lb_progress.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.lb_progress.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-            this.lb_progress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.lb_progress.Name = "lb_progress";
-            this.lb_progress.Size = new System.Drawing.Size(400, 25);
-            this.lb_progress.Text = "Progresso";
-            this.lb_progress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lb_progress.Visible = false;
-            // 
-            // ts_user
-            // 
-            this.ts_user.AutoSize = false;
-            this.ts_user.AutoToolTip = true;
-            this.ts_user.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.ts_user.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-            this.ts_user.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ts_user.Name = "ts_user";
-            this.ts_user.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.ts_user.Size = new System.Drawing.Size(200, 25);
-            this.ts_user.ToolTipText = "Usuário";
-            // 
-            // ts_hora
-            // 
-            this.ts_hora.AutoSize = false;
-            this.ts_hora.AutoToolTip = true;
-            this.ts_hora.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.ts_hora.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-            this.ts_hora.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ts_hora.Name = "ts_hora";
-            this.ts_hora.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
-            this.ts_hora.Size = new System.Drawing.Size(100, 25);
-            // 
-            // pb_change
-            // 
-            this.pb_change.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pb_change.Image = ((System.Drawing.Image)(resources.GetObject("pb_change.Image")));
-            this.pb_change.Location = new System.Drawing.Point(803, 30);
-            this.pb_change.Name = "pb_change";
-            this.pb_change.Size = new System.Drawing.Size(34, 34);
-            this.pb_change.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pb_change.TabIndex = 7;
-            this.pb_change.TabStop = false;
-            this.pb_change.Click += new System.EventHandler(this.pb_change_Click);
-            // 
-            // pb_close
-            // 
-            this.pb_close.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pb_close.Image = ((System.Drawing.Image)(resources.GetObject("pb_close.Image")));
-            this.pb_close.Location = new System.Drawing.Point(843, 30);
-            this.pb_close.Name = "pb_close";
-            this.pb_close.Size = new System.Drawing.Size(34, 34);
-            this.pb_close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pb_close.TabIndex = 5;
-            this.pb_close.TabStop = false;
-            this.pb_close.Click += new System.EventHandler(this.pb_cancel_Click);
-            // 
-            // notifyIcon1
-            // 
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.Visible = true;
             // 
             // frm_main
             // 
@@ -669,13 +687,12 @@
         private System.Windows.Forms.ToolStripButton tool_ag;
         private System.Windows.Forms.ToolStripButton tool_file;
         private System.Windows.Forms.ToolStripMenuItem ajudaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.PictureBox pb_close;
         private System.Windows.Forms.ToolStripButton tool_home;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem menu_ts_consultas;
-        private System.Windows.Forms.ToolStripMenuItem menu_ts_vend;
+        private System.Windows.Forms.ToolStripMenuItem menu_ts_usuario;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         public System.Windows.Forms.StatusStrip ss_main;
         private System.Windows.Forms.ToolStripMenuItem gerar_site;
@@ -701,6 +718,9 @@
         private System.Windows.Forms.ToolStripButton tool_query;
         private System.Windows.Forms.ToolStripStatusLabel ts_user;
         private System.Windows.Forms.ToolStripStatusLabel ts_hora;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem menu_ts_logs;
+        private System.Windows.Forms.ToolStripMenuItem menu_ts_sincronizacoes;
     }
 }
 

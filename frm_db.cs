@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -75,34 +76,18 @@ namespace Integrador
                     ";Database=" + database +
                     ";User Id=" + user +
                     ";Password=" + senha;
-                System.Data.SqlClient.SqlConnection conexao = new System.Data.SqlClient.SqlConnection(con);
+              
 
                 // TENTA CONECTAR
-                try
-                {
-                    conexao.Open();
-                    MessageBox.Show("Conexao realizada com sucesso!", "Conexão");
-                    bt_save.Enabled = true;
-                    //gt_lbl_conexao_mensagem.Text = "Sucesso!";
-                    //gt_lbl_conexao_mensagem.ForeColor = System.Drawing.Color.Green;
-                    //gt_btn_conexao_salvar.Enabled = true;
-                    //gt_btn_conexao_testar.Enabled = false;
-
-                }
-                // SE NÃO CONECTAR EXIBE A MENSAGEM DE ERRO DO PROPRIO SGBD
-                catch (Exception ex)
-                {
-                    //gt_lbl_conexao_mensagem.Text = "Erro!";
-                    //gt_lbl_conexao_mensagem.ForeColor = System.Drawing.Color.Red;
-                    MessageBox.Show(ex.Message);
-
-                }
-
-                finally
-                {
-                    // FECHA A CONEXAO
-                    conexao.Close();
-                }
+              
+                    if (Connect.validarConexao(con))
+                    {
+                        MessageBox.Show("Conexao realizada com sucesso!", "Conexão");
+                    }
+                    else {
+                        MessageBox.Show("Não foi possível obter conexão.", "Erro");
+                    }
+            
             }
         }
 
@@ -131,7 +116,38 @@ namespace Integrador
 
         private void bt_teste_Click(object sender, EventArgs e)
         {
+
+            /*pb_progress.Visible = true;
+            BackgroundWorker bgw = new BackgroundWorker();
+            bgw = new BackgroundWorker();
+            bgw.WorkerReportsProgress = true;
+            bgw.ProgressChanged += new ProgressChangedEventHandler(bgw_ProgressChanged);
+            bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_RunWorkerCompleted);
+            bgw.DoWork += new DoWorkEventHandler(bgw_DoWork);
+            bgw.RunWorkerAsync();*/
+
+            Thread t = new Thread(() => testarConexao());
+            t.Start();
+
+            //testarConexao();
+        }
+
+        void bgw_DoWork(object sender, DoWorkEventArgs e)
+        {
+
             testarConexao();
+
+        }
+
+        void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            
+        }
+
+        void bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            pb_progress.Visible = false;
+            bt_save.Enabled = true;
         }
 
         private void bt_save_Click(object sender, EventArgs e)
