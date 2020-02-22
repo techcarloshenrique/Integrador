@@ -80,7 +80,7 @@ namespace Integrador
 
                 // TENTA CONECTAR
               
-                    if (Connect.validarConexao(con))
+                    if (Conexao.validarConexao(con))
                     {
                         MessageBox.Show("Conexao realizada com sucesso!", "Conexão");
                     }

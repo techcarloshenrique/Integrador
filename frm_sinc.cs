@@ -13,7 +13,7 @@ namespace Integrador
 {
     public partial class frm_sinc : Form
     {
-        SqlConnection conn;
+        
         public frm_sinc()
         {
             InitializeComponent();

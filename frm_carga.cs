@@ -34,9 +34,9 @@ namespace Integrador
 
         public void loadGridView() {
 
-            conn = frm_main.Conexao.obterConexao();
+            conn = Conexao.obterConexao();
 
-            String query = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU ORDER BY SU.CODIGO";
+            String query = "SELECT SU.CODIGO_USUARIO, SU.NOME FROM SONIC_USUARIOS SU GROUP BY SU.CODIGO_USUARIO, SU.NOME ";
 
             SqlCommand retorno = new SqlCommand(query, conn);
 
@@ -53,7 +53,7 @@ namespace Integrador
             dgv_usuario.Rows[0].Selected = true;
             DataGridViewColumn c = dgv_usuario.Columns[0];
             c.Width = 60;
-            frm_main.Conexao.fecharConexao(conn);
+            Conexao.fecharConexao();
 
         }
 

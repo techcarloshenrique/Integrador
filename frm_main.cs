@@ -44,6 +44,7 @@ namespace Integrador
                 u.createFolder("\\Sonic\\Querys", true);
                 u.createFolder("\\Sonic\\Sites", true);
                 u.createFolder("\\Sonic\\Imagens", true);
+                u.createFolder("\\Sonic\\Ceps", true);
 
                 if (Properties.Settings.Default.SITE == "")
                 {
@@ -58,7 +59,7 @@ namespace Integrador
                     InitializeComponent();
                     //notifyIcon1.Icon = new Icon(GetType(), "add.ico");
                     loadDashboard();
-                    Connect conn = new Connect();
+                    Conexao conn = new Conexao();
                 }
 
 
@@ -70,7 +71,7 @@ namespace Integrador
 
         public void loadDashboard() {
 
-            if (!Connect.validarConexao())
+            if (!Conexao.validarConexao())
             {
                 tool_home.Enabled = false;
                 menu_ts_trans.Visible = false;
@@ -85,321 +86,6 @@ namespace Integrador
             }
 
         }
-
-        public void EnviarArquivosFTP(DirectoryInfo from, String to, String ext, Boolean server)
-        {
-            String ftp;
-            String user;
-            String pass;
-
-            if (server)
-            {
-                ftp = Properties.Settings.Default.FTP_SERVER_IP;
-                user = Properties.Settings.Default.FTP_SERVER_USER;
-                pass = Properties.Settings.Default.FTP_SERVER_PASS;
-            }
-            else {
-                ftp = Properties.Settings.Default.FTP_EMPRESA_IP;
-                user = Properties.Settings.Default.FTP_EMPRESA_USER;
-                pass = Properties.Settings.Default.FTP_EMPRESA_PASS;
-            }
-
-            FileInfo[] files = from.GetFiles(ext);
-
-            if (files.Length > 0)
-            {
-
-                img_tick.Image = Properties.Resources.loader2;
-                lb_progress.Visible = true;
-                lb_progress.Text = "CONECTANTO COM O SERVIDOR FTP... ";
-
-                try
-                {
-                    int count = 1;
-                    foreach (FileInfo file in files)
-                    {
-
-                        FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create("ftp://" + ftp + to + file.Name);
-                        request.Credentials = new NetworkCredential(user, pass);
-                        request.Method = WebRequestMethods.Ftp.UploadFile;
-                        request.KeepAlive = false;
-                        request.UseBinary = true;
-                        request.Timeout = 60000 * 2;
-
-                        lb_progress.Text = "ENVIANDO -> " + file.Name + " - " + count + "/" + files.Length;
-
-                        //Thread.Sleep(500);
-
-                        FileStream stream = File.OpenRead(from.ToString() + "\\" + file.Name);
-                        Stream reqStream = request.GetRequestStream();
-                        byte[] buffer = new byte[4096 * 2];
-                        int nRead = 0;
-                        while ((nRead = stream.Read(buffer, 0, buffer.Length)) != 0)
-                        {
-                            reqStream.Write(buffer, 0, nRead);
-                        }
-                        stream.Close();
-                        reqStream.Close();
-
-                        count++;
-
-                    }
-
-
-                }
-                catch (WebException ex)
-                {
-                    MessageBox.Show(ex.ToString(), ex.StackTrace);
-                }
-
-                DateTime dt = DateTime.Now;
-                string data = (string.Format("{0:dd/MM/yyyy}", dt));
-                string hora = (string.Format("{0:HH:mm}", dt));
-                Properties.Settings.Default.LASTEXPORT = "ÚLTIMO ENVIO REALIZADO EM " + data + " ÀS " + hora;
-                Properties.Settings.Default.Save();
-                Properties.Settings.Default.Reload();
-                img_tick.Image = Properties.Resources.tick;
-                lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
-
-            }
-            else
-            {
-                MessageBox.Show("Nenhum arquivo para ser enviado.", "Aviso");
-            }
-        }
-
-        public class Ftp {
-
-            // METODO PARA ENVIAR ARQUIVOS VIA FTP
-            public void EnviarArquivoFTP(DirectoryInfo di)
-            {
-
-                FileInfo[] files = di.GetFiles("*.TXT");
-
-                if (files.Length > 0)
-                {
-
-                    //Atualizar
-                    //ss.Invoke(new Action(() => f.img_tick.Image = Properties.Resources.loader2));
-                    //ss.Invoke(new Action(() => f.lb_progress.Visible = true));
-                    //ss.Invoke(new Action(() => f.lb_progress.Text = "CONECTANTO COM O SERVIDOR FTP... "));
-
-                    try
-                    {
-
-                        foreach (FileInfo file in files)
-                        {
-
-                            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create("ftp://" + Properties.Settings.Default.FTP_EMPRESA_IP + "/" + file.Name);
-                            request.Credentials = new NetworkCredential(Properties.Settings.Default.FTP_EMPRESA_USER, Properties.Settings.Default.FTP_EMPRESA_PASS);
-                            request.Method = WebRequestMethods.Ftp.UploadFile;
-                            request.KeepAlive = false;
-                            request.UseBinary = true;
-                            request.Timeout = 60000 * 2;
-
-                            //f.lb_progress.Text = "ENVIANDO "+file.Name;
-
-                            //Thread.Sleep(500);
-
-                            FileStream stream = File.OpenRead(di.ToString() + "\\" + file.Name);
-                            Stream reqStream = request.GetRequestStream();
-                            byte[] buffer = new byte[4096 * 2];
-                            int nRead = 0;
-                            while ((nRead = stream.Read(buffer, 0, buffer.Length)) != 0)
-                            {
-                                reqStream.Write(buffer, 0, nRead);
-                            }
-                            stream.Close();
-                            reqStream.Close();
-
-                        }
-
-
-                    }
-                    catch (WebException ex)
-                    {
-
-                        //throw new Exception("Erro ao tentar enviar o arquivo...\n");
-                        MessageBox.Show(ex.ToString(), "Erro");
-                        new LogWriter(ex.Message, ex.StackTrace);
-
-                    }
-
-                    DateTime dt = DateTime.Now;
-                    string data = (string.Format("{0:dd/MM/yyyy}", dt));
-                    string hora = (string.Format("{0:HH:mm}", dt));
-                    Properties.Settings.Default.LASTEXPORT = "ÚLTIMO ENVIO REALIZADO EM " + data + " ÀS " + hora;
-                    Properties.Settings.Default.Save();
-                    Properties.Settings.Default.Reload();
-                    //f.ss_main.Invoke(new Action(() => f.img_tick.Image = Properties.Resources.tick));
-                    //f.ss_main.Invoke(new Action(() => f.lb_progress.Text = Properties.Settings.Default.LASTEXPORT));
-
-                }
-                else {
-                    MessageBox.Show("Nenhum arquivo para ser enviado.", "Aviso");
-                }
-            }
-
-
-            // METODO PARA BAIXAR ARQUIVOS VIA FTP
-            public static void BaixarArquivoFTP(string url, string local, string usuario, string senha)
-            {
-                try
-                {
-                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-                    request.Method = WebRequestMethods.Ftp.DownloadFile;
-                    request.Credentials = new NetworkCredential(usuario, senha);
-                    request.UseBinary = true;
-                    using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-                    {
-                        using (Stream rs = response.GetResponseStream())
-                        {
-                            using (FileStream ws = new FileStream(local, FileMode.Create))
-                            {
-                                byte[] buffer = new byte[2048];
-                                int bytesRead = rs.Read(buffer, 0, buffer.Length);
-                                while (bytesRead > 0)
-                                {
-                                    ws.Write(buffer, 0, bytesRead);
-                                    bytesRead = rs.Read(buffer, 0, buffer.Length);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    throw;
-                }
-            }
-
-            public void MoverArquivoFtp(string ftpURL, string UserName, string Password, string ftpDirectory, string ftpDirectoryProcessed, string FileName)
-            {
-                FtpWebRequest ftpRequest = null;
-                FtpWebResponse ftpResponse = null;
-                try
-                {
-                    ftpRequest = (FtpWebRequest)WebRequest.Create(ftpURL + "/" + ftpDirectory + "/" + FileName);
-                    ftpRequest.Credentials = new NetworkCredential(UserName, Password);
-                    ftpRequest.UseBinary = true;
-                    ftpRequest.UsePassive = true;
-                    ftpRequest.KeepAlive = true;
-                    ftpRequest.Method = WebRequestMethods.Ftp.Rename;
-                    ftpRequest.RenameTo = ftpDirectoryProcessed + "/" + FileName;
-                    ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                    ftpResponse.Close();
-                    ftpRequest = null;
-                }
-                catch (Exception ex)
-                {
-                    new LogWriter(ex.Message, ex.StackTrace);
-                }
-            }
-
-            public void CriarDiretorioFTP(string pasta)
-            {
-                String path = String.Format("ftp://{0}{1}", "localhost/", pasta);
-                FtpWebRequest ftpRequest;
-                FtpWebResponse ftpResponse;
-                try
-                {
-                    ftpRequest = (FtpWebRequest)WebRequest.Create(path);
-                    ftpRequest.Credentials = new NetworkCredential("asabranca", "123456");
-                    ftpRequest.UseBinary = true;
-                    ftpRequest.UsePassive = true;
-                    ftpRequest.KeepAlive = true;
-                    ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
-                    ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                    ftpResponse.Close();
-                    ftpRequest = null;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao criar a pasta", ex.ToString());
-                    new LogWriter(ex.Message, ex.StackTrace);
-                }
-                return;
-            }
-
-        }
-
-        // CLASSE USADA PARA INICIAR AS CONEXÕES
-        public class Conexao
-        {
-            // CAPTURA OS VALORES GRAVADOS NO APP [STRING DE CONEXAO]
-            private static string connString =
-                "Server=" + Properties.Settings.Default.IP
-                + "," + Properties.Settings.Default.PORT
-                + ";Database=" + Properties.Settings.Default.DATABASE
-                + ";User Id=" + Properties.Settings.Default.USER
-                + ";Password=" + Properties.Settings.Default.PASS;
-
-
-            // REPRESENTA A CONEXAO COM O BANCO
-            private static SqlConnection conn;// = null;
-
-            // MÉTODO DA CLASSE PARA OBTER A CONEXAO
-            public static SqlConnection obterConexao()
-            {
-
-                // INSTANCIANDO UMA NOVA CONEXAO
-                conn = new SqlConnection(connString);
-
-                // SE CONEXAO COM SUCESSO...
-                try
-                {
-
-                    // ABRE A CONEXAO E RETORNA AO CHAMADOR DO MÉTODO
-                    conn.Open();
-
-                }
-                catch (SqlException ex)
-                {
-                    conn = null;
-                    new LogWriter(ex.Message, ex.StackTrace);
-
-                }
-
-                // RETORNA A CONEXAO
-                return conn;
-            }
-
-            // MÉTODO DA CLASSE PARA FECHAR A CONEXAO
-            public static void fecharConexao(SqlConnection conn)
-            {
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-            }
-        }
-
-        // TESTAR A CONEXAO COM OS DADOS JA GRAVADOS
-        public bool ConexaoLoad()
-        {
-
-            bool connected = false;
-
-            // SOLICITAR CONEXAO USANDO A CLASSE DE CONEXAO
-            SqlConnection conn = Conexao.obterConexao();
-
-            if (conn == null)
-            {
-                // PODEMOS ABRIR UM MESSAGEBOX PARA UM FEEDBACK DA CONEXAO
-                //MessageBox.Show("Conexao não ok", "");
-            }
-            else
-            {
-
-                // COMO É APENAS UM TESTE, PODEMOS FECHAR A CONEXAO
-                connected = true;
-                Conexao.fecharConexao(conn);
-
-            }
-            return connected;
-
-        }
-
 
         public void montarResultadoSite(SqlConnection conexao, string nome_arquivo, string query)
         {
@@ -482,6 +168,9 @@ namespace Integrador
                 MessageBox.Show("Erro ao exportar o arquivo " + nome_arquivo + "\n\nDetalhe do erro: " + ex.Message);
                 new LogWriter(ex.Message, ex.StackTrace);
             }
+            finally {
+
+            }
         }
 
         public void montarResultadoSiteTabela(SqlConnection conexao, string secao, string query)
@@ -530,7 +219,8 @@ namespace Integrador
                         // ENQUANTO HOUVER LEITURA NAS LINHAS DO RETORNO
                         while (DR.Read())
                         {
-             
+
+                            valor.Write(a + "=");
 
                             // LAÇO PARA LER AS COLUNAS DA LINHA
                             for (int i = 0; i < DR.FieldCount; i++)
@@ -626,7 +316,8 @@ namespace Integrador
                         valor.Close();
 
                     }
-                    else {
+                    else
+                    {
                         valor.WriteLine();
                         valor.Close();
                     }
@@ -640,6 +331,9 @@ namespace Integrador
 
                 MessageBox.Show("Erro ao exportar o arquivo " + saida + "\n\nDetalhe do erro: " + ex.Message);
                 new LogWriter(ex.Message, ex.StackTrace);
+            }
+            finally {
+                
             }
         }
 
@@ -717,7 +411,7 @@ namespace Integrador
                     }
 
                     // FECHANDO A CONEXAO COM O BANCO
-                    Conexao.fecharConexao(conn);
+                    Conexao.fecharConexao();
                     DateTime dt = DateTime.Now;
                     string data = (string.Format("{0:dd/MM/yyyy}", dt));
                     string hora = (string.Format("{0:HH:mm}", dt));
@@ -774,11 +468,11 @@ namespace Integrador
 
             if (vendedor == "TODOS OS USUARIOS")
             {
-                select = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU";
+                select = "SELECT SU.CODIGO_USUARIO, SU.NOME FROM SONIC_USUARIOS SU";
             }
             else
             {
-                select = "SELECT SU.CODIGO, SU.NOME FROM SONIC_USUARIOS SU WHERE SU.NOME = '" + nome + "'";
+                select = "SELECT SU.CODIGO_USUARIO, SU.NOME FROM SONIC_USUARIOS SU WHERE SU.NOME = '" + nome + "'";
             }
 
             // APAGA TODOS OS ARQUIVOS DO DIRETORIO DE VENDEDORES
@@ -935,7 +629,7 @@ namespace Integrador
                     {
 
                         // FECHANDO A CONEXAO COM O BANCO
-                        Conexao.fecharConexao(connect);
+                        Conexao.fecharConexao();
                         DateTime dt = DateTime.Now;
                         string data = (string.Format("{0:dd/MM/yyyy}", dt));
                         string hora = (string.Format("{0:HH:mm}", dt));
@@ -1065,7 +759,7 @@ namespace Integrador
                     }
 
                     // FECHANDO A CONEXAO COM O BANCO
-                    Conexao.fecharConexao(conn);
+                    Conexao.fecharConexao();
                     DateTime dt = DateTime.Now;
                     string data = (string.Format("{0:dd/MM/yyyy}", dt));
                     string hora = (string.Format("{0:HH:mm}", dt));
@@ -1182,10 +876,14 @@ namespace Integrador
 
                                 query = lista.Rows[y].ItemArray[5].ToString();
                                 secao = lista.Rows[y].ItemArray[2].ToString();
-
-                                if (query.Contains("?"))
+                                String z = String.Empty;
+                                if (query.IndexOf("?") != -1 && query.Contains("?"))
                                 {
-                                    query = query.Replace("?", userId[y]);
+                                   
+                                    query = query.Replace("?", userId[x]);
+                                    //MessageBox.Show(query.Replace("?", "A"));
+                                    //MessageBox.Show(userId[x]);
+                                    
                                 }
 
                                 gerarCargaVendedores(connect, saida, secao, query);
@@ -1213,7 +911,7 @@ namespace Integrador
                     else
                     {
 
-                        Conexao.fecharConexao(connect);
+                        Conexao.fecharConexao();
                         img_tick.Image = Properties.Resources.tick;
                         lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
                         DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_QUERY para gerar carga. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
@@ -1242,7 +940,7 @@ namespace Integrador
             EndSuccess:
 
                 // FECHANDO A CONEXAO COM O BANCO
-                Conexao.fecharConexao(connect);
+                Conexao.fecharConexao();
                 DateTime dt = DateTime.Now;
                 string data = (string.Format("{0:dd/MM/yyyy}", dt));
                 string hora = (string.Format("{0:HH:mm}", dt));
@@ -1393,7 +1091,7 @@ namespace Integrador
             bool result = false;
             Thread thread = new Thread(() => {
                 
-                result  = ConexaoLoad();
+                result  = Conexao.validarConexao();
 
             });
 
@@ -1703,7 +1401,8 @@ namespace Integrador
 
             DirectoryInfo from = new DirectoryInfo(Properties.Settings.Default.IMAGENS);
             String to = Properties.Settings.Default.FTP_IMAGENS;
-            Thread enviar = new Thread(() => EnviarArquivosFTP(from, to, "*.ZIP", false));
+            //Ftp.Transmit t = new Ftp.Transmit();
+            Thread enviar = new Thread(() => new Ftp.Transmit().EnviarArquivosFTP(from, to, "*.ZIP", false));
             enviar.Start();
 
         }
@@ -1712,7 +1411,8 @@ namespace Integrador
 
             DirectoryInfo from = new DirectoryInfo(Properties.Settings.Default.SITES);
             String to = Properties.Settings.Default.FTP_SONIC_SITES;
-            Thread enviar = new Thread(() => EnviarArquivosFTP(from, to, "*.TXT", true));
+            //Ftp.Transmit t = new Ftp.Transmit();
+            Thread enviar = new Thread(() => new Ftp.Transmit().EnviarArquivosFTP(from, to, "*.TXT", true));
             enviar.Start();
 
         }
@@ -1732,7 +1432,7 @@ namespace Integrador
         public void enviarCargaParaFtp() {
             DirectoryInfo from = new DirectoryInfo(Properties.Settings.Default.USUARIOS);
             String to = Properties.Settings.Default.FTP_USUARIOS;
-            Thread enviar = new Thread(() => EnviarArquivosFTP(from, to, "*.TXT", false));
+            Thread enviar = new Thread(() => new Ftp.Transmit().EnviarArquivosFTP(from, to, "*.TXT", false));
             enviar.Start();
         }
 
@@ -1766,6 +1466,11 @@ namespace Integrador
             String form = "frm_sinc";
             frm_sinc s = new frm_sinc();
             abrirFormDialog(form, s);
+        }
+
+        private void arquivos_cep_Click(object sender, EventArgs e)
+        {
+            new Arquivo.Gravar().gerarCepPorEstado();
         }
     }
 }

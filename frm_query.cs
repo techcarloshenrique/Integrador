@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,29 +27,56 @@ namespace Integrador
 
         private void frm_query_Load(object sender, EventArgs e)
         {
-            tb_secao.CharacterCasing = CharacterCasing.Upper;
-            conn = frm_main.Conexao.obterConexao();
-            List<string> tables = new List<string>();
-            DataTable dt = conn.GetSchema("Tables");
 
-            foreach (DataRow rowTables in dt.Rows)
-            {
-                string tablename = (string)rowTables[2];
-                cb_view.Items.Add(tablename);
-            }
+            loadComBoList();
             cb_view.SelectedIndex = 0;
-            cb_destino.Items.Add("SITE");
-            cb_destino.Items.Add("CARGA");
+            cb_destino.Items.Add("Carga");
+            cb_destino.Items.Add("Site");
             cb_destino.SelectedIndex = 0;
             loadDataGridView();
         }
 
-      
+
+        public void loadComBoList() {
+            tb_secao.CharacterCasing = CharacterCasing.Upper;
+            conn = Conexao.obterConexao();
+            List<string> tables = new List<string>();
+            DataTable dt = conn.GetSchema("Views");
+
+            ArrayList valuesList = new ArrayList();
+            SqlCommand command = new SqlCommand("SELECT NOME_VIEW FROM SONIC_QUERY", conn);
+            SqlDataReader dataReader = command.ExecuteReader();
+            int count = 0;
+            while (dataReader.Read())
+            {
+                valuesList.Add(dataReader[0].ToString());
+                //MessageBox.Show(valuesList[count].ToString());
+                count += 1;
+            }
+            conn.Close();
+            int count2 = 0;
+        
+            foreach (DataRow rowTables in dt.Rows)
+            {
+
+                string tablename = (string)rowTables[2];
+
+                if (!valuesList.Contains(tablename.ToString()))
+                {
+                    cb_view.Items.Add(tablename);
+                }
+
+
+                count2 += 1;
+            }
+        }
+
         public void loadDataGridView() {
 
            
             String query = "SELECT * FROM SONIC_QUERY";
-            conn = frm_main.Conexao.obterConexao();
+            conn = Conexao.obterConexao();
+     
             SqlCommand retorno = new SqlCommand(query, conn);
             SqlDataReader row = retorno.ExecuteReader();
             DataTable lista = new DataTable();
@@ -62,6 +90,8 @@ namespace Integrador
             DataGridViewColumn c = dgv_query.Columns[0];
             DataGridViewColumn d = dgv_query.Columns[3];
             DataGridViewColumn e = dgv_query.Columns[4];
+           // d.ReadOnly = false;
+            //e.ReadOnly = false;
             c.Width = 30;
             d.Width = 50;
             e.Width = 50;
@@ -71,6 +101,7 @@ namespace Integrador
             {
 
                 dgv_query.Columns[i].HeaderText = Util.FirstCharToUpper(dgv_query.Columns[i].Name.Replace("_", " "));
+                //dgv_query.Columns[i].ReadOnly = false;
 
             }
 
@@ -96,7 +127,7 @@ namespace Integrador
 
                 if (cb_usuario.Checked)
                 {
-                    _query += " WHERE USUARIO = ?";
+                    _query += " WHERE CODIGO_USUARIO = ?";
                     usuario = 1;
                 }
                 String nome_view = cb_view.Text;
@@ -146,7 +177,7 @@ namespace Integrador
         {
 
             try {
-                conn = Connect.obterConexao();
+                conn = Conexao.obterConexao();
                 SqlCommand retorno = new SqlCommand(query, conn);
                 SqlDataReader row = retorno.ExecuteReader();
                 tabela = new DataTable();
@@ -174,7 +205,7 @@ namespace Integrador
 
             }
 
-            lb_result.Text = "A consulta retornou " + tabela.Rows.Count + " registros.";
+            lb_result.Text = tabela.Rows.Count + " registros encontrados.";
         }
 
         private void cb_view_SelectedIndexChanged(object sender, EventArgs e)
@@ -197,7 +228,7 @@ namespace Integrador
 
                         String id = String.Empty;
                         String query = String.Empty;
-                        conn = frm_main.Conexao.obterConexao();
+                        conn = Conexao.obterConexao();
 
                         foreach (DataGridViewRow r in dgv_query.SelectedRows)
                         {
@@ -231,6 +262,56 @@ namespace Integrador
         private void tsb_refresh_Click(object sender, EventArgs e)
         {
             loadDataGridView();
+        }
+
+        private void tbs_add_Click(object sender, EventArgs e)
+        {
+            if (cb_view.Text == "" || tb_secao.Text == "" || cb_destino.Text == "" || rtb_query.Text == "")
+            {
+                
+                //MessageBox.Show("Preencha todos os campos","Aviso");
+                Messages m = new Messages();
+                m.dialogMessage("Preencha todos os campos", Messages.INFO);
+
+            }
+            else
+            {
+                
+                lb_result.Visible = false;
+
+                int usuario = 0;
+                String _query = rtb_query.Text;
+
+                if (cb_usuario.Checked)
+                {
+                    _query += " WHERE CODIGO_USUARIO = ?";
+                    usuario = 1;
+                }
+                String nome_view = cb_view.Text;
+                String nome_secao = tb_secao.Text;
+                String destino = cb_destino.SelectedItem.ToString().ToLower();
+
+                String query =
+                    "INSERT INTO SONIC_QUERY " +
+                    "(id, nome_view, nome_secao, destino, usuario, query) VALUES " +
+                    "((SELECT ISNULL(MAX(id)+1,1) FROM SONIC_QUERY WITH(SERIALIZABLE, UPDLOCK)), '" + nome_view + "', '" + nome_secao + "', '" + destino + "', " + usuario + ", '" + _query + "')";
+
+                Database d = new Database();
+                d.Insert(query);
+                d.closeConn();
+                loadDataGridView();
+                tb_secao.Text = "";
+                rtb_query.Text = "";
+                cb_view.Text = "";
+
+            }
+        }
+
+        private void cb_view_DropDown(object sender, EventArgs e)
+        {
+            cb_view.Text = "";
+            cb_view.Items.Clear();
+            loadComBoList();
         }
     }
 }

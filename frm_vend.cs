@@ -18,7 +18,7 @@ namespace Integrador
             InitializeComponent();
         }
 
-        SqlConnection conn = frm_main.Conexao.obterConexao();
+        SqlConnection conn = Conexao.obterConexao();
 
         protected void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -88,7 +88,7 @@ namespace Integrador
         private void frm_vend_Load(object sender, EventArgs e)
         {
 
-            SqlConnection conn = frm_main.Conexao.obterConexao();
+            SqlConnection conn = Conexao.obterConexao();
 
             String query = "SELECT * FROM SONIC_USUARIOS";
 

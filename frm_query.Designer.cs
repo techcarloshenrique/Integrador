@@ -34,7 +34,6 @@
             this.pb_progress = new System.Windows.Forms.PictureBox();
             this.lb_result = new System.Windows.Forms.Label();
             this.bt_testar = new System.Windows.Forms.Button();
-            this.bt_save = new System.Windows.Forms.Button();
             this.rtb_query = new System.Windows.Forms.RichTextBox();
             this.cb_destino = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,7 +43,9 @@
             this.dgv_query = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_refresh = new System.Windows.Forms.ToolStripButton();
+            this.tbs_add = new System.Windows.Forms.ToolStripButton();
             this.tsb_excluir = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_progress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_query)).BeginInit();
@@ -58,7 +59,6 @@
             this.groupBox1.Controls.Add(this.pb_progress);
             this.groupBox1.Controls.Add(this.lb_result);
             this.groupBox1.Controls.Add(this.bt_testar);
-            this.groupBox1.Controls.Add(this.bt_save);
             this.groupBox1.Controls.Add(this.rtb_query);
             this.groupBox1.Controls.Add(this.cb_destino);
             this.groupBox1.Controls.Add(this.label2);
@@ -90,12 +90,13 @@
             this.cb_view.Name = "cb_view";
             this.cb_view.Size = new System.Drawing.Size(243, 24);
             this.cb_view.TabIndex = 40;
+            this.cb_view.DropDown += new System.EventHandler(this.cb_view_DropDown);
             this.cb_view.SelectedIndexChanged += new System.EventHandler(this.cb_view_SelectedIndexChanged);
             // 
             // pb_progress
             // 
             this.pb_progress.Image = global::Integrador.Properties.Resources.loader2;
-            this.pb_progress.Location = new System.Drawing.Point(455, 132);
+            this.pb_progress.Location = new System.Drawing.Point(536, 132);
             this.pb_progress.Name = "pb_progress";
             this.pb_progress.Size = new System.Drawing.Size(30, 30);
             this.pb_progress.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -120,7 +121,7 @@
             this.bt_testar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bt_testar.Image = global::Integrador.Properties.Resources.database_go;
             this.bt_testar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_testar.Location = new System.Drawing.Point(491, 132);
+            this.bt_testar.Location = new System.Drawing.Point(572, 132);
             this.bt_testar.Name = "bt_testar";
             this.bt_testar.Size = new System.Drawing.Size(75, 30);
             this.bt_testar.TabIndex = 5;
@@ -128,20 +129,6 @@
             this.bt_testar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bt_testar.UseVisualStyleBackColor = true;
             this.bt_testar.Click += new System.EventHandler(this.bt_testar_Click);
-            // 
-            // bt_save
-            // 
-            this.bt_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bt_save.Image = global::Integrador.Properties.Resources.add;
-            this.bt_save.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bt_save.Location = new System.Drawing.Point(572, 132);
-            this.bt_save.Name = "bt_save";
-            this.bt_save.Size = new System.Drawing.Size(75, 30);
-            this.bt_save.TabIndex = 6;
-            this.bt_save.Text = "Inserir";
-            this.bt_save.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.bt_save.UseVisualStyleBackColor = true;
-            this.bt_save.Click += new System.EventHandler(this.bt_save_Click);
             // 
             // rtb_query
             // 
@@ -210,7 +197,6 @@
             this.dgv_query.GridColor = System.Drawing.SystemColors.Window;
             this.dgv_query.Location = new System.Drawing.Point(12, 221);
             this.dgv_query.Name = "dgv_query";
-            this.dgv_query.ReadOnly = true;
             this.dgv_query.RowHeadersVisible = false;
             this.dgv_query.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_query.Size = new System.Drawing.Size(676, 176);
@@ -224,7 +210,9 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsb_refresh,
-            this.tsb_excluir});
+            this.tbs_add,
+            this.tsb_excluir,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(12, 191);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -243,6 +231,16 @@
             this.tsb_refresh.Text = "Refresh";
             this.tsb_refresh.Click += new System.EventHandler(this.tsb_refresh_Click);
             // 
+            // tbs_add
+            // 
+            this.tbs_add.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbs_add.Image = global::Integrador.Properties.Resources.add;
+            this.tbs_add.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbs_add.Name = "tbs_add";
+            this.tbs_add.Size = new System.Drawing.Size(23, 24);
+            this.tbs_add.Text = "Incluir";
+            this.tbs_add.Click += new System.EventHandler(this.tbs_add_Click);
+            // 
             // tsb_excluir
             // 
             this.tsb_excluir.AutoSize = false;
@@ -253,6 +251,15 @@
             this.tsb_excluir.Size = new System.Drawing.Size(20, 26);
             this.tsb_excluir.Text = "Excluir";
             this.tsb_excluir.Click += new System.EventHandler(this.tsb_excluir_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::Integrador.Properties.Resources.disk;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 24);
+            this.toolStripButton1.Text = "tsb_save";
             // 
             // frm_query
             // 
@@ -289,7 +296,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tb_secao;
         private System.Windows.Forms.RichTextBox rtb_query;
-        private System.Windows.Forms.Button bt_save;
         private System.Windows.Forms.Label lb_result;
         private System.Windows.Forms.Button bt_testar;
         public System.Windows.Forms.PictureBox pb_progress;
@@ -299,5 +305,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsb_refresh;
         private System.Windows.Forms.ToolStripButton tsb_excluir;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tbs_add;
     }
 }

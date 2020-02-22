@@ -63,8 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connect.cs" />
+    <Compile Include="Conexao.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="Arquivo.cs" />
     <Compile Include="frm_dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +162,7 @@
     <Compile Include="frm_vend.Designer.cs">
       <DependentUpon>frm_vend.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ftp.cs" />
     <Compile Include="LogWriter.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Program.cs" />

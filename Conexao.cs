@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Integrador
 {
-    class Connect : IDisposable
+    class Conexao : IDisposable
     {
         // CAPTURA OS VALORES GRAVADOS NO APP [STRING DE CONEXAO]
         private static string connString =
@@ -18,7 +18,7 @@ namespace Integrador
             + ";User Id=" + Properties.Settings.Default.USER
             + ";Password=" + Properties.Settings.Default.PASS;
         private static SqlConnection conn;// = null;
-        public Connect() {
+        public Conexao() {
             if ((conn = obterConexao()) == null)
             {
                 this.Dispose();
@@ -103,7 +103,7 @@ namespace Integrador
             bool connected = false;
 
             // SOLICITAR CONEXAO USANDO A CLASSE DE CONEXAO
-            SqlConnection conn = Connect.obterConexao();
+            SqlConnection conn = Conexao.obterConexao();
 
             if (conn == null && conn.State != ConnectionState.Closed)
             {
@@ -115,7 +115,7 @@ namespace Integrador
 
                 // COMO É APENAS UM TESTE, PODEMOS FECHAR A CONEXAO
                 connected = true;
-                Connect.fecharConexao();
+                Conexao.fecharConexao();
 
             }
             return connected;

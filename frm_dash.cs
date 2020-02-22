@@ -189,7 +189,7 @@ namespace Integrador
         private void frm_dash_Load(object sender, EventArgs e)
         {
 
-            SqlConnection conn = frm_main.Conexao.obterConexao();
+            SqlConnection conn = Conexao.obterConexao();
 
             Int32 ped_today = 0;
             Int32 ped_week = 0;

@@ -441,7 +441,7 @@ namespace Integrador
 
             try
             {
-                conn = frm_main.Conexao.obterConexao();
+                conn = Conexao.obterConexao();
             }
             catch (SqlException e)
             {

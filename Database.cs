@@ -12,7 +12,7 @@ namespace Integrador
     {
         SqlCommand com;
         DateTime time = DateTime.Now;
-        SqlConnection c = Connect.obterConexao();
+        SqlConnection c = Conexao.obterConexao();
         string time_db = "yyyy-MM-dd HH:mm:ss";
 
         public void Insert(string sql) {
