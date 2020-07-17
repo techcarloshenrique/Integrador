@@ -715,7 +715,7 @@ namespace Integrador
 
                     // CAPTURANDO O ARQUVIO
                     //string query = string.Empty;
-                    String carga = "SELECT * FROM SONIC_QUERY WHERE destino = 'site'";
+                    String carga = "SELECT * FROM SONIC_SECAO_SITE";
                     //PREPARA O SELECT
                     SqlCommand result = new SqlCommand(carga, conn);
 
@@ -747,7 +747,7 @@ namespace Integrador
                         for (int x = 0; x < countQuery; x++)
                         {
                            
-                            query = lista.Rows[x].ItemArray[5].ToString();
+                            query = lista.Rows[x].ItemArray[3].ToString();
                             secao = lista.Rows[x].ItemArray[2].ToString();
 
                             // AQUI DECIDE O QUE FAZER COM A QUERY GERADA
@@ -760,7 +760,7 @@ namespace Integrador
                     else
                     {
 
-                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_QUERY para gerar site. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_SITE para gerar site. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
                         if (res == DialogResult.Yes)
                         {
                             String form = "frm_query";
@@ -828,7 +828,7 @@ namespace Integrador
 
                     // CAPTURANDO O ARQUVIO
                     //string query = string.Empty;
-                    String carga = "SELECT * FROM SONIC_QUERY WHERE destino = 'carga'";
+                    String carga = "SELECT * FROM SONIC_SECAO_USUARIOS";
                     //PREPARA O SELECT
                     SqlCommand result = new SqlCommand(carga, connect);
 
@@ -886,7 +886,7 @@ namespace Integrador
                             for (int y = 0; y < countQuery; y++)
                             {
 
-                                query = lista.Rows[y].ItemArray[5].ToString();
+                                query = lista.Rows[y].ItemArray[4].ToString();
                                 secao = lista.Rows[y].ItemArray[2].ToString();
                                 String z = String.Empty;
                                 if (query.IndexOf("?") != -1 && query.Contains("?"))
@@ -926,7 +926,7 @@ namespace Integrador
                         Conexao.fecharConexao();
                         img_tick.Image = Properties.Resources.tick;
                         lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
-                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_QUERY para gerar carga. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_USUARIOS para gerar carga. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
 
                         if (res == DialogResult.Yes)
                         {
