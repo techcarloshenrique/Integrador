@@ -31,6 +31,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbs_site_add = new System.Windows.Forms.ToolStripButton();
             this.tsb_site_excluir = new System.Windows.Forms.ToolStripButton();
+            this.tsb_site_editar = new System.Windows.Forms.ToolStripButton();
             this.tsb_site_salvar = new System.Windows.Forms.ToolStripButton();
             this.tbc_arquivos = new System.Windows.Forms.TabControl();
             this.tp_site = new System.Windows.Forms.TabPage();
@@ -50,11 +51,10 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.tsb_usuarios_add = new System.Windows.Forms.ToolStripButton();
             this.tsb_usuarios_excluir = new System.Windows.Forms.ToolStripButton();
+            this.tsb_usuarios_editar = new System.Windows.Forms.ToolStripButton();
             this.tsb_usuarios_salvar = new System.Windows.Forms.ToolStripButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgv_usuarios = new System.Windows.Forms.DataGridView();
-            this.tsb_site_editar = new System.Windows.Forms.ToolStripButton();
-            this.tsb_usuarios_editar = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.tbc_arquivos.SuspendLayout();
             this.tp_site.SuspendLayout();
@@ -108,6 +108,16 @@
             this.tsb_site_excluir.Size = new System.Drawing.Size(20, 26);
             this.tsb_site_excluir.Text = "Excluir";
             this.tsb_site_excluir.Click += new System.EventHandler(this.tsb_site_excluir_Click);
+            // 
+            // tsb_site_editar
+            // 
+            this.tsb_site_editar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_site_editar.Image = global::Integrador.Properties.Resources.application_edit;
+            this.tsb_site_editar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_site_editar.Name = "tsb_site_editar";
+            this.tsb_site_editar.Size = new System.Drawing.Size(23, 24);
+            this.tsb_site_editar.Text = "Editar";
+            this.tsb_site_editar.Click += new System.EventHandler(this.tsb_site_editar_Click);
             // 
             // tsb_site_salvar
             // 
@@ -327,6 +337,16 @@
             this.tsb_usuarios_excluir.Text = "Excluir";
             this.tsb_usuarios_excluir.Click += new System.EventHandler(this.tsb_usuarios_excluir_Click);
             // 
+            // tsb_usuarios_editar
+            // 
+            this.tsb_usuarios_editar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_usuarios_editar.Image = global::Integrador.Properties.Resources.application_edit;
+            this.tsb_usuarios_editar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_usuarios_editar.Name = "tsb_usuarios_editar";
+            this.tsb_usuarios_editar.Size = new System.Drawing.Size(23, 24);
+            this.tsb_usuarios_editar.Text = "Editar";
+            this.tsb_usuarios_editar.Click += new System.EventHandler(this.tsb_usuarios_editar_Click);
+            // 
             // tsb_usuarios_salvar
             // 
             this.tsb_usuarios_salvar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -359,26 +379,6 @@
             this.dgv_usuarios.Size = new System.Drawing.Size(285, 127);
             this.dgv_usuarios.TabIndex = 0;
             this.dgv_usuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_usuarios_CellClick);
-            // 
-            // tsb_site_editar
-            // 
-            this.tsb_site_editar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsb_site_editar.Image = global::Integrador.Properties.Resources.application_edit;
-            this.tsb_site_editar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_site_editar.Name = "tsb_site_editar";
-            this.tsb_site_editar.Size = new System.Drawing.Size(23, 24);
-            this.tsb_site_editar.Text = "Editar";
-            this.tsb_site_editar.Click += new System.EventHandler(this.tsb_site_editar_Click);
-            // 
-            // tsb_usuarios_editar
-            // 
-            this.tsb_usuarios_editar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsb_usuarios_editar.Image = global::Integrador.Properties.Resources.application_edit;
-            this.tsb_usuarios_editar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_usuarios_editar.Name = "tsb_usuarios_editar";
-            this.tsb_usuarios_editar.Size = new System.Drawing.Size(23, 24);
-            this.tsb_usuarios_editar.Text = "Editar";
-            this.tsb_usuarios_editar.Click += new System.EventHandler(this.tsb_usuarios_editar_Click);
             // 
             // frm_query
             // 

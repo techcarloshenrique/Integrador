@@ -78,8 +78,13 @@ namespace Integrador
             return tab;
         }
 
+        public void selectTab(int tab)
+        {
+            tbc_arquivos.SelectTab(tab);
+        }
+
         public void loadSiteList() {
-            String query = "SELECT secao FROM SONIC_SECAO_SITE";
+            String query = "SELECT secao FROM SONIC_SECAO_SITE ORDER BY id";
             conn = Conexao.obterConexao();
 
             SqlCommand retorno = new SqlCommand(query, conn);
@@ -115,7 +120,7 @@ namespace Integrador
 
         public void loadUserList()
         {
-            String query = "SELECT secao, usuario FROM SONIC_SECAO_USUARIOS";
+            String query = "SELECT secao FROM SONIC_SECAO_USUARIOS ORDER BY id";
             conn = Conexao.obterConexao();
 
             SqlCommand retorno = new SqlCommand(query, conn);
@@ -266,7 +271,7 @@ namespace Integrador
             DataTable dt = conn.GetSchema("Views");
 
             ArrayList valuesList = new ArrayList();
-            SqlCommand command = new SqlCommand("SELECT SECAO FROM SONIC_QUERY", conn);
+            SqlCommand command = new SqlCommand("SELECT SECAO FROM SONIC_QUERY ORDER BY id", conn);
             SqlDataReader dataReader = command.ExecuteReader();
             int count = 0;
             while (dataReader.Read())

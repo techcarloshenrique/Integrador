@@ -463,7 +463,6 @@ namespace Integrador
 
         }
 
-
         public void montarCargaVendedores(DirectoryInfo diretorio, String vendedor, bool transmitir)
         {
             // EXIBINDO O PROGRESS E O LABEL
@@ -715,7 +714,7 @@ namespace Integrador
 
                     // CAPTURANDO O ARQUVIO
                     //string query = string.Empty;
-                    String carga = "SELECT * FROM SONIC_SECAO_SITE";
+                    String carga = "SELECT * FROM SONIC_SECAO_SITE ORDER BY id";
                     //PREPARA O SELECT
                     SqlCommand result = new SqlCommand(carga, conn);
 
@@ -760,7 +759,7 @@ namespace Integrador
                     else
                     {
 
-                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_SITE para gerar site. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+                        DialogResult res = MessageBox.Show("Não há nenhuma seção para gerar site. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
                         if (res == DialogResult.Yes)
                         {
                             String form = "frm_query";
@@ -828,7 +827,7 @@ namespace Integrador
 
                     // CAPTURANDO O ARQUVIO
                     //string query = string.Empty;
-                    String carga = "SELECT * FROM SONIC_SECAO_USUARIOS";
+                    String carga = "SELECT * FROM SONIC_SECAO_USUARIOS ORDER BY id";
                     //PREPARA O SELECT
                     SqlCommand result = new SqlCommand(carga, connect);
 
@@ -926,13 +925,15 @@ namespace Integrador
                         Conexao.fecharConexao();
                         img_tick.Image = Properties.Resources.tick;
                         lb_progress.Text = Properties.Settings.Default.LASTEXPORT;
-                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada na tabela SONIC_USUARIOS para gerar carga. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
+                        DialogResult res = MessageBox.Show("Não há nenhuma seção cadastrada para gerar dados. \n\nDeseja cadastrar agora?", "Atenção", MessageBoxButtons.YesNo);
 
                         if (res == DialogResult.Yes)
                         {
                             String form = "frm_query";
                             frm_query q = new frm_query();
-                            abrirFormDialog(form, q);                      
+                            q.selectTab(1);
+                            abrirFormDialog(form, q);
+                                             
                         }
 
                         
