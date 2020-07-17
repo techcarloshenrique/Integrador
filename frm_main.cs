@@ -194,26 +194,33 @@ namespace Integrador
                 // NOME DA SAIDA DO(S) ARQUIVO(S)
                 String site = Properties.Settings.Default.SITE + ".TXT";
 
+                // CRIANDO O ARQUIVO PARA A GRAVAÇÃO DOS DADOS
+                StreamWriter valor = new StreamWriter(caminho + site, true, Encoding.GetEncoding("ISO-8859-1"));
+               
 
                 // LAÇO DA TABELA
                 using (SqlDataReader DR = retorno.ExecuteReader())
                 {
 
+   
+                    valor.Write(secao);
+                    // ATUALIZANDO O LABEL DO PROGRESS
+                    lb_progress.Text = "EXPORTANDO -> " + secao;
+
                     // SE A CONSULTA RETORNAR LINHAS
                     if (DR.HasRows)
                     {
-                        
-                        // CRIANDO O ARQUIVO PARA A GRAVAÇÃO DOS DADOS
-                        StreamWriter valor = new StreamWriter(caminho + site, true, Encoding.GetEncoding("ISO-8859-1"));
 
-                        // ATUALIZANDO O LABEL DO PROGRESS
-                        lb_progress.Text = "EXPORTANDO -> " + secao;
-
-                        //Thread.Sleep(100);
-
-                        valor.Write(secao);
                         valor.WriteLine();
-
+                        valor.Write("###TOTAL=" + rows);
+                        valor.WriteLine();
+                        valor.Write("###COLUNAS(SEQUENCIAL=;");
+                        for (int i = 0; i < DR.FieldCount; i++)
+                        {
+                            valor.Write(DR.GetName(i) + ";");
+                        }
+                        valor.Write(")");
+                        valor.WriteLine();
                         int a = 1;
 
                         // ENQUANTO HOUVER LEITURA NAS LINHAS DO RETORNO
@@ -221,6 +228,7 @@ namespace Integrador
                         {
 
                             valor.Write(a + "=");
+
 
                             // LAÇO PARA LER AS COLUNAS DA LINHA
                             for (int i = 0; i < DR.FieldCount; i++)
@@ -284,12 +292,16 @@ namespace Integrador
                     if (DR.HasRows)
                     {
 
-
-                        //Thread.Sleep(100);
-
-                        //valor.Write(secao);
                         valor.WriteLine();
-
+                        valor.Write("###TOTAL="+rows);
+                        valor.WriteLine();
+                        valor.Write("###COLUNAS(SEQUENCIAL=;");
+                        for (int i = 0; i < DR.FieldCount; i++)
+                        {
+                            valor.Write(DR.GetName(i)+";");
+                        }
+                        valor.Write(")");
+                        valor.WriteLine();
                         int a = 1;
 
                         // ENQUANTO HOUVER LEITURA NAS LINHAS DO RETORNO

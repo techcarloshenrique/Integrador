@@ -150,6 +150,12 @@
     <Compile Include="frm_query.Designer.cs">
       <DependentUpon>frm_query.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_secao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_secao.Designer.cs">
+      <DependentUpon>frm_secao.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_sinc.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_query.resx">
       <DependentUpon>frm_query.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_secao.resx">
+      <DependentUpon>frm_secao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_sinc.resx">
       <DependentUpon>frm_sinc.cs</DependentUpon>
