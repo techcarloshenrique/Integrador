@@ -81,7 +81,7 @@ namespace Integrador
                 String query = String.Empty;
                 String _query = rtb_query.Text;
                 String nome_view = cb_secao.Text;
-                String secao = "[" + cb_secao.Text + "]";
+                String secao =  cb_secao.Text.Replace("SONIC_","");
 
                 switch (_frm_query.checkTabActive()) {
                     case "SITE":

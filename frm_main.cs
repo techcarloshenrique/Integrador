@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Security;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Integrador
 {
@@ -261,6 +263,144 @@ namespace Integrador
             }
         }
 
+        public void montarResultadoSiteTabelaXML(SqlConnection conexao, string secao, string query)
+        {
+
+            try
+            {
+                SqlCommand retorno = new SqlCommand(query, conexao);
+                SqlDataReader row = retorno.ExecuteReader();
+
+                // CRIANDO UM  E POPULANDO UM DATATABLE COM O RETORNO DA QUERY
+                DataTable tabela = new DataTable();
+                tabela.Load(row);
+
+                // CONTANDO O TOTAL DE LINHAS DO RETORNO PARA O VALOR MAXIMO DA PROGRESSBAR
+                int rows = tabela.Rows.Count;
+
+                // CAMINHO PADRÃO PARA GERAÇÃO DO(S) ARQUIVO(S)
+                string caminho = Properties.Settings.Default.SITES + "\\";
+
+                // NOME DA SAIDA DO(S) ARQUIVO(S)
+                String site = Properties.Settings.Default.SITE + ".xml";
+
+                // LAÇO DA TABELA
+                using (SqlDataReader DR = retorno.ExecuteReader())
+                {
+
+                    lb_progress.Text = "EXPORTANDO -> " + secao;
+                   
+                    if (!File.Exists(caminho + site))
+                    {
+
+                        using (XmlTextWriter writer = new XmlTextWriter(@caminho + site, Encoding.GetEncoding("ISO-8859-1")))
+                        {
+                            writer.WriteStartDocument();
+                            writer.Formatting = Formatting.Indented;
+                            writer.WriteStartElement("dados");
+
+                            if (DR.HasRows)
+                            {
+                                List<string> mylistColumn = new List<string>();
+                                mylistColumn.Add("SEQUENCIAL=");
+                                for (int i = 0; i < DR.FieldCount; i++)
+                                {
+                                    mylistColumn.Add(DR.GetName(i));
+                                }
+                                writer.WriteStartElement("secao");
+                                writer.WriteAttributeString("nome", secao);
+                                writer.WriteElementString("colunas", string.Join("|", mylistColumn.ToArray()));
+
+                                int a = 1;
+
+                                while (DR.Read())
+                                {
+
+                                    List<string> mylistValue = new List<string>();
+                                    mylistValue.Add(a + "=");        
+                                    for (int i = 0; i < DR.FieldCount; i++)
+                                    {
+
+                                        mylistValue.Add(DR[i].ToString());
+
+                                    }
+
+                                    writer.WriteElementString("valores", string.Join("|", mylistValue.ToArray()));
+
+                                    a++;
+
+                                }
+
+                                writer.WriteElementString("total", rows + "");
+
+                            }
+
+                            writer.Close();
+                        
+                        }
+
+                    }
+                    else {
+
+                        XDocument doc = XDocument.Load(@caminho + site);
+                        XElement root = new XElement("secao");
+
+                        
+                       
+                        if (DR.HasRows)
+                            {
+
+                            List<string> mylistColumn = new List<string>();
+                            mylistColumn.Add("SEQUENCIAL=");
+                            for (int i = 0; i < DR.FieldCount; i++)
+                                {
+                                    mylistColumn.Add(DR.GetName(i));
+                                }
+
+                            root.Add(new XAttribute("nome", secao));
+                            root.Add(new XElement("colunas", string.Join("|", mylistColumn.ToArray())));
+
+                            int a = 1;
+                            
+                            while (DR.Read())
+                                {
+                             
+                                List<string> mylistValues = new List<string>();
+                                mylistValues.Add(a+"=");
+                                for (int i = 0; i < DR.FieldCount; i++)
+                                    {
+
+                                        mylistValues.Add(DR[i].ToString());
+
+                                    }
+
+                                root.Add(new XElement("valores", string.Join("|", mylistValues.ToArray())));
+
+                                a++;
+
+                                }
+
+                        }
+
+                        root.Add(new XElement("total", rows));
+                        doc.Element("dados").Add(root);
+                        doc.Save(@caminho+site);
+                        
+
+                    }
+
+                }
+                
+            }
+
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Erro ao exportar o arquivo " + secao + "\n\nDetalhe do erro: " + ex.Message);
+                new LogWriter(ex.Message, ex.StackTrace);
+            }
+        }
+
         public void gerarCargaVendedores(SqlConnection conexao, string saida, string secao, string query)
         {
 
@@ -348,6 +488,150 @@ namespace Integrador
                 
             }
         }
+
+        public void gerarCargaUsuariosXML(SqlConnection conexao, string saida, string secao, string query)
+        {
+
+            try
+            {
+                SqlCommand retorno = new SqlCommand(query, conexao);
+                SqlDataReader row = retorno.ExecuteReader();
+
+                // CRIANDO E POPULANDO UM DATATABLE COM O RETORNO DA QUERY
+                DataTable tabela = new DataTable();
+                tabela.Load(row);
+
+                // CONTANDO O TOTAL DE LINHAS DO RETORNO PARA O VALOR MAXIMO DA PROGRESSBAR
+                int rows = tabela.Rows.Count;
+
+                // CAMINHO PADRÃO PARA GERAÇÃO DO(S) ARQUIVO(S)
+                string caminho = Properties.Settings.Default.USUARIOS + "\\";
+
+                // LAÇO DA TABELA
+                using (SqlDataReader DR = retorno.ExecuteReader())
+                {
+
+
+                    if (!File.Exists(caminho + saida))
+                    {
+
+                        using (XmlTextWriter writer = new XmlTextWriter(@caminho + saida, Encoding.GetEncoding("UTF-8")))
+                        {
+                            writer.WriteStartDocument();
+                            writer.Formatting = Formatting.Indented;
+                            writer.WriteStartElement("dados");
+                            writer.WriteStartElement("secao");
+                            writer.WriteAttributeString("nome", secao);
+
+                            List<string> mylistColumn = new List<string>();
+                            mylistColumn.Add("SEQUENCIAL=");
+                            for (int i = 0; i < DR.FieldCount; i++)
+                            {
+                                mylistColumn.Add(DR.GetName(i));
+                            }
+
+                            writer.WriteElementString("colunas", string.Join("|", mylistColumn.ToArray()));
+
+                            if (DR.HasRows)
+                            {
+                               
+                                int a = 1;
+
+                                while (DR.Read())
+                                {
+
+                                    List<string> mylistValue = new List<string>();
+                                    mylistValue.Add(a + "=");
+                                    for (int i = 0; i < DR.FieldCount; i++)
+                                    {
+
+                                        mylistValue.Add(DR[i].ToString());
+
+                                    }
+
+                                    writer.WriteElementString("valores", string.Join("|", mylistValue.ToArray()));
+
+                                    a++;
+
+                                }
+
+                                writer.WriteElementString("total", rows + "");
+
+                            }
+
+                            writer.Close();
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        XDocument doc = XDocument.Load(@caminho + saida);
+                        XElement root = new XElement("secao");
+
+                        root.Add(new XAttribute("nome", secao));
+                        List<string> mylistColumn = new List<string>();
+                        mylistColumn.Add("SEQUENCIAL=");
+
+                        for (int i = 0; i < DR.FieldCount; i++)
+                        {
+                            mylistColumn.Add(DR.GetName(i));
+                        }
+
+                        root.Add(new XElement("colunas", string.Join("|", mylistColumn.ToArray())));
+
+                        if (DR.HasRows)
+                        {
+
+                           
+
+                            int a = 1;
+
+                            while (DR.Read())
+                            {
+
+                                List<string> mylistValues = new List<string>();
+                                mylistValues.Add(a + "=");
+                                for (int i = 0; i < DR.FieldCount; i++)
+                                {
+
+                                    mylistValues.Add(DR[i].ToString());
+
+                                }
+
+                                root.Add(new XElement("valores", string.Join("|", mylistValues.ToArray())));
+
+                                a++;
+
+                            }
+
+                        }
+
+                        root.Add(new XElement("total", rows));
+                        doc.Element("dados").Add(root);
+                        doc.Save(@caminho + saida);
+
+
+                    }
+
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Erro ao exportar o arquivo " + saida + "\n\nDetalhe do erro: " + ex.Message);
+                new LogWriter(ex.Message, ex.StackTrace);
+            }
+            finally
+            {
+
+            }
+        }
+
 
         public void montarSite(DirectoryInfo arquivos)
         {
@@ -750,7 +1034,8 @@ namespace Integrador
                             secao = lista.Rows[x].ItemArray[2].ToString();
 
                             // AQUI DECIDE O QUE FAZER COM A QUERY GERADA
-                            montarResultadoSiteTabela(conn, secao, query);
+                            //montarResultadoSiteTabela(conn, secao, query);
+                            montarResultadoSiteTabelaXML(conn, secao, query);
                             // FECHANDO O OBJETO STREAMREADER
 
                         }
@@ -804,6 +1089,7 @@ namespace Integrador
 
         }
 
+
         public void montarCargaUsuariosTabela(List<string> uId, List<string> uName, bool transmitir)
         {
 
@@ -856,7 +1142,7 @@ namespace Integrador
                         for (int x = 0; x < userId.Count; x++)
                         {
 
-                            String saida = userId[x].ToString().PadLeft(5, '0') + ".TXT";
+                            String saida = userId[x].ToString().PadLeft(5, '0') + ".xml";
                             String pessoa = userName[x].ToString();
 
                             db.saveSincronizacaoItens(saida);
@@ -897,7 +1183,8 @@ namespace Integrador
                                     
                                 }
 
-                                gerarCargaVendedores(connect, saida, secao, query);
+                                //gerarCargaVendedores(connect, saida, secao, query);
+                                gerarCargaUsuariosXML(connect, saida, secao, query);
 
 
                             }
